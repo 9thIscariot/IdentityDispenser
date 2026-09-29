@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &902100001
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 902100002}
+  - component: {fileID: 902100003}
+  - component: {fileID: 902100004}
+  - component: {fileID: 902100005}
+  m_Layer: 0
+  m_Name: Roulette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &902100002
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902100001}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902100003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902100001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c34c1800a9db654381efcadaafed440, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  cycleSeconds: 1
+  minimumCruiseSeconds: 1
+  brakeSeconds: 4
+  yiSangOnly: 1
+  portraits:
+  - identityId: yi-sang-001
+    texture: {fileID: 2800000, guid: 06816a3c3ba277244aebae063aa1f278, type: 3}
+  - identityId: yi-sang-002
+    texture: {fileID: 2800000, guid: a47ca6b9362576b4da64d6bb451f406a, type: 3}
+  - identityId: yi-sang-003
+    texture: {fileID: 2800000, guid: 0998df2260c4e6f4ba806c00d564caf9, type: 3}
+  - identityId: yi-sang-004
+    texture: {fileID: 2800000, guid: 16fd25007f5228d42af66ffffb06306c, type: 3}
+  - identityId: yi-sang-005
+    texture: {fileID: 2800000, guid: f291beb8ae2410048a44ca360471a19a, type: 3}
+  - identityId: yi-sang-006
+    texture: {fileID: 2800000, guid: 99d299dd08fd62c4a9c8d53ee754c006, type: 3}
+  - identityId: yi-sang-007
+    texture: {fileID: 2800000, guid: 5c48b3a2069806a4cb1c5066a513a558, type: 3}
+  - identityId: yi-sang-008
+    texture: {fileID: 2800000, guid: 00552067038e02b4c82edc58d6aaa77a, type: 3}
+  - identityId: yi-sang-009
+    texture: {fileID: 2800000, guid: dfea9a91ef94bb048bdab4a446851583, type: 3}
+  - identityId: yi-sang-010
+    texture: {fileID: 2800000, guid: 7d732bc967ad65340ae354d10af754f5, type: 3}
+  - identityId: yi-sang-011
+    texture: {fileID: 2800000, guid: 8292b18bcf5322c43b7239555befd6d1, type: 3}
+  - identityId: yi-sang-012
+    texture: {fileID: 2800000, guid: 4a95683926e81614689fbba14a127f25, type: 3}
+  - identityId: yi-sang-013
+    texture: {fileID: 2800000, guid: a004ecf597dea6f4da3b95a22aa88435, type: 3}
+  - identityId: yi-sang-014
+    texture: {fileID: 2800000, guid: 1b8c7ecf669178c49a1abb6746d0f0c9, type: 3}
+  - identityId: yi-sang-015
+    texture: {fileID: 2800000, guid: 112c76547907e8f46968da57126cb01e, type: 3}
+  - identityId: yi-sang-016
+    texture: {fileID: 2800000, guid: d0b5964079665044996eb4a8abcdbc8f, type: 3}
+--- !u!114 &902100004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902100001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 398fd7404cdb19b4db3eeccb4b1b841c, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+--- !u!114 &902100005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902100001}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65491b1bf082705418d181d729fb367a, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  font: {fileID: 0}
+  machineBackground: {fileID: 2800000, guid: ff3faa5c73b4415b94a7ab2576a56e4b, type: 3}
