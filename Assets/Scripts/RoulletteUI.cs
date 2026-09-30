@@ -8,8 +8,12 @@ public sealed class RoulletteUI : MonoBehaviour
 {
     [SerializeField] private Font font;
     [SerializeField] private Texture2D machineBackground;
-    private const float DesignWidth = 1500, DesignHeight = 829;
-    private const float ScreenWidth = 914, CellHeight = 394;
+    [SerializeField] private Texture2D buttonNormal;
+    [SerializeField] private Texture2D buttonPressed;
+    // 현재 배경 PNG(1920×1080)의 픽셀 좌표를 기준으로 배치합니다.
+    private const float DesignWidth = 1920, DesignHeight = 1080;
+    // 투명 스크린보다 크게 깔아 프레임 가장자리까지 빈틈없이 채웁니다.
+    private const float ScreenWidth = 1040, CellHeight = 520;
     private RectTransform currentRow, nextRow;
     private RawImage currentPortrait, nextPortrait;
     private Text resultName, counter, status;
@@ -47,33 +51,30 @@ public sealed class RoulletteUI : MonoBehaviour
         background.raycastTarget = false;
         background.color = machineBackground != null ? Color.white : new Color(0.12f, 0.12f, 0.12f);
 
-        // 원본의 붉은 외곽 프레임을 남기고 화면 내부 문구를 가립니다.
-        RectTransform viewport = Rect("Screen", machine, At(750, 279), new Vector2(ScreenWidth, CellHeight));
-        var screenShape = viewport.gameObject.AddComponent<MachineShapeGraphic>();
-        screenShape.color = new Color(0.015f, 0.018f, 0.02f);
-        screenShape.Configure(45);
-        screenShape.raycastTarget = false;
-        viewport.gameObject.AddComponent<Mask>().showMaskGraphic = true;
+        // 이미지를 뒤에서 회전시키고, 앞쪽 PNG의 알파가 실제 화면 윤곽을 만듭니다.
+        RectTransform viewport = Rect("Screen", machine, At(960, 400), new Vector2(ScreenWidth, CellHeight));
+        viewport.gameObject.AddComponent<RectMask2D>();
         currentRow = Rect("CurrentIdentity", viewport, Vector2.zero, new Vector2(ScreenWidth, CellHeight));
         nextRow = Rect("NextIdentity", viewport, new Vector2(0, -CellHeight), new Vector2(ScreenWidth, CellHeight));
         currentPortrait = MakePortrait(currentRow);
         nextPortrait = MakePortrait(nextRow);
+        background.transform.SetAsLastSibling();
 
         // 좌우 사각 패널은 클릭 기능이 없는 상태 표시창으로 사용합니다.
-        Panel("CounterPlate", machine, At(337, 599), new Vector2(143, 123), new Color(0.055f, 0.065f, 0.065f));
-        counter = Label("Counter", machine, At(337, 599), new Vector2(137, 111), "", 23, new Color(0.6f, 0.86f, 0.72f));
-        Panel("StatusPlate", machine, At(1160, 599), new Vector2(143, 123), new Color(0.055f, 0.065f, 0.065f));
-        status = Label("Status", machine, At(1160, 599), new Vector2(137, 111), "대기", 22, new Color(0.85f, 0.75f, 0.5f));
+        Panel("CounterPlate", machine, At(514, 754), new Vector2(154, 134), new Color(0.055f, 0.065f, 0.065f));
+        counter = Label("Counter", machine, At(514, 754), new Vector2(148, 122), "", 23, new Color(0.6f, 0.86f, 0.72f));
+        Panel("StatusPlate", machine, At(1410, 757), new Vector2(154, 134), new Color(0.055f, 0.065f, 0.065f));
+        status = Label("Status", machine, At(1410, 757), new Vector2(148, 122), "대기", 22, new Color(0.85f, 0.75f, 0.5f));
 
-        spinButton = MakeButton("Spin", machine, At(550, 591), "인격\n뽑기", new Color(0.09f, 0.5f, 0.23f));
-        resetButton = MakeButton("Reset", machine, At(749, 591), "전체\n초기화", new Color(0.74f, 0.56f, 0.08f));
-        Button quitButton = MakeButton("Quit", machine, At(949, 585), "룰렛\n종료", new Color(0.62f, 0.1f, 0.08f));
+        spinButton = MakeButton("Spin", machine, At(744, 751), "인격\n뽑기");
+        resetButton = MakeButton("Reset", machine, At(959, 751), "전체\n초기화");
+        Button quitButton = MakeButton("Quit", machine, At(1177, 751), "룰렛\n종료");
         spinButton.onClick.AddListener(manager.Spin);
         resetButton.onClick.AddListener(manager.ResetDraws);
         quitButton.onClick.AddListener(manager.QuitRoulette);
 
-        Panel("Nameplate", machine, At(750, 712), new Vector2(574, 43), new Color(0.045f, 0.045f, 0.045f));
-        resultName = Label("ResultName", machine, At(750, 712), new Vector2(554, 37), "", 24,
+        Panel("Nameplate", machine, At(960, 878), new Vector2(620, 44), new Color(0.045f, 0.045f, 0.045f));
+        resultName = Label("ResultName", machine, At(960, 878), new Vector2(600, 40), "", 24,
             new Color(0.9f, 0.84f, 0.66f));
         resultName.resizeTextForBestFit = true;
         resultName.resizeTextMinSize = 12;
@@ -130,8 +131,14 @@ public sealed class RoulletteUI : MonoBehaviour
         if (portrait.texture == texture) return;
         portrait.texture = texture;
         if (texture == null) return;
-        float scale = Mathf.Min(ScreenWidth / texture.width, CellHeight / texture.height);
-        portrait.rectTransform.sizeDelta = new Vector2(texture.width * scale, texture.height * scale);
+        // 비율을 유지하며 화면을 채우고, 넘치는 부분은 중앙 기준으로 잘라냅니다.
+        // UV로 자르면 회전 중에도 다음 인격의 칸을 침범하지 않습니다.
+        float scale = Mathf.Max(ScreenWidth / texture.width, CellHeight / texture.height);
+        float visibleWidth = ScreenWidth / (texture.width * scale);
+        float visibleHeight = CellHeight / (texture.height * scale);
+        portrait.rectTransform.sizeDelta = new Vector2(ScreenWidth, CellHeight);
+        portrait.uvRect = new UnityEngine.Rect((1 - visibleWidth) / 2, (1 - visibleHeight) / 2,
+            visibleWidth, visibleHeight);
     }
 
     private static RawImage MakePortrait(Transform parent)
@@ -143,29 +150,23 @@ public sealed class RoulletteUI : MonoBehaviour
         return image;
     }
 
-    private Button MakeButton(string name, Transform parent, Vector2 position, string title, Color color)
+    private Button MakeButton(string name, Transform parent, Vector2 position, string title)
     {
-        RectTransform shadow = Rect(name + "Bezel", parent, position + new Vector2(0, -5), new Vector2(132, 112));
-        var bevel = shadow.gameObject.AddComponent<MachineShapeGraphic>();
-        bevel.Configure(0, true);
-        bevel.color = new Color(0.025f, 0.025f, 0.022f);
-        bevel.raycastTarget = false;
-        RectTransform rect = Rect(name, parent, position, new Vector2(122, 102));
-        var face = rect.gameObject.AddComponent<MachineShapeGraphic>();
-        face.color = color;
-        face.Configure(0, true, 1.65f);
-        Button button = rect.gameObject.AddComponent<Button>();
+        // PNG의 투명 여백을 포함한 크기입니다. 실제 버튼은 약 134×116입니다.
+        RectTransform rect = Rect(name, parent, position, new Vector2(190, 190));
+        var face = rect.gameObject.AddComponent<RawImage>();
+        face.texture = buttonNormal;
+        MachineButton button = rect.gameObject.AddComponent<MachineButton>();
         button.targetGraphic = face;
         ColorBlock colors = button.colors;
-        colors.highlightedColor = new Color(1.12f, 1.12f, 1.12f);
-        colors.pressedColor = new Color(0.65f, 0.65f, 0.65f);
-        colors.disabledColor = new Color(0.38f, 0.38f, 0.38f);
+        colors.highlightedColor = new Color(1.08f, 1.08f, 1.08f);
+        colors.pressedColor = Color.white;
+        colors.disabledColor = new Color(0.55f, 0.55f, 0.55f);
         button.colors = colors;
-        Text label = Label("Label", rect, Vector2.zero, new Vector2(108, 78), title, 21, new Color(0.97f, 0.96f, 0.87f));
+        Text label = Label("Label", rect, new Vector2(0, 9), new Vector2(100, 68), title, 21,
+            new Color(0.2f, 0.17f, 0.12f));
         label.fontStyle = FontStyle.Bold;
-        var textShadow = label.gameObject.AddComponent<Shadow>();
-        textShadow.effectColor = new Color(0, 0, 0, 0.7f);
-        textShadow.effectDistance = new Vector2(1, -1);
+        button.Configure(face, buttonNormal, buttonPressed, label);
         return button;
     }
 

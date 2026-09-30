@@ -110,3 +110,5 @@ MonoBehaviour:
   m_EditorClassIdentifier:
   font: {fileID: 0}
   machineBackground: {fileID: 2800000, guid: ff3faa5c73b4415b94a7ab2576a56e4b, type: 3}
+  buttonNormal: {fileID: 2800000, guid: 2e52c93cdeeb40e783dff8a9f8a6d416, type: 3}
+  buttonPressed: {fileID: 2800000, guid: 60f37498d18a41c1995caa35988ec3bd, type: 3}
