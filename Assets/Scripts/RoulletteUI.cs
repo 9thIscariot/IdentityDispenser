@@ -102,23 +102,20 @@ public sealed class RoulletteUI : MonoBehaviour
         resultName.text = result.DisplayName;
     }
 
-    public void ShowIdle(IdentityData preview = null)
+    public void ShowIdle()
     {
         resultName.text = "";
-        if (preview != null) RenderReel(preview, preview, 0);
-        else
-        {
-            currentPortrait.enabled = nextPortrait.enabled = false;
-            currentRow.anchoredPosition = Vector2.zero;
-            nextRow.anchoredPosition = new Vector2(0, -CellHeight);
-        }
+        // 이미지를 숨기면 뒤쪽의 검은 배경이 보여 꺼진 화면처럼 보입니다.
+        currentPortrait.enabled = nextPortrait.enabled = false;
+        currentRow.anchoredPosition = Vector2.zero;
+        nextRow.anchoredPosition = new Vector2(0, -CellHeight);
     }
 
     public void Refresh(int remaining, int total, bool spinning, string message)
     {
         counter.text = $"남은 인격\n{remaining} / {total}";
         status.text = spinning ? "추첨 중" : remaining == 0 ? "추첨 완료\n초기화 필요" :
-            manager.LastResult != null ? "추첨 완료" : manager.YiSangOnly ? "대기\n이상 테스트" : "대기";
+            manager.LastResult != null ? "추첨 완료" : manager.YiSangOnly ? "대기\n이상 한정" : "대기";
         spinButton.interactable = !spinning && remaining > 0;
         resetButton.interactable = !spinning;
         if (spinning) resultName.text = "";
@@ -131,6 +128,15 @@ public sealed class RoulletteUI : MonoBehaviour
         if (portrait.texture == texture) return;
         portrait.texture = texture;
         if (texture == null) return;
+        // 카드 형태의 세로 이미지는 얼굴과 카드 전체가 보이도록 축소해 표시합니다.
+        if (texture.width < texture.height)
+        {
+            // 회전 영역은 프레임 뒤까지 확장되어 있으므로, 카드는 실제 창 안쪽 높이에 맞춥니다.
+            float fit = Mathf.Min(ScreenWidth / texture.width, 450f / texture.height);
+            portrait.rectTransform.sizeDelta = new Vector2(texture.width * fit, texture.height * fit);
+            portrait.uvRect = new UnityEngine.Rect(0, 0, 1, 1);
+            return;
+        }
         // 비율을 유지하며 화면을 채우고, 넘치는 부분은 중앙 기준으로 잘라냅니다.
         // UV로 자르면 회전 중에도 다음 인격의 칸을 침범하지 않습니다.
         float scale = Mathf.Max(ScreenWidth / texture.width, CellHeight / texture.height);

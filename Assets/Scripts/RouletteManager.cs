@@ -12,8 +12,10 @@ public sealed class RouletteManager : MonoBehaviour
         public Texture2D texture;
     }
 
-    [Header("임시 테스트")]
+    [Header("추첨 범위")]
     [SerializeField] private bool yiSangOnly;
+    [Tooltip("이미지가 연결된 인격만 추첨합니다.")]
+    [SerializeField] private bool portraitsOnly = true;
     [Header("인격 ID와 이미지 연결")]
     [SerializeField] private PortraitBinding[] portraits = Array.Empty<PortraitBinding>();
 
@@ -31,22 +33,23 @@ public sealed class RouletteManager : MonoBehaviour
     public int RemainingCount => remaining?.Count ?? 0;
     public IdentityData LastResult { get; private set; }
     public bool YiSangOnly => yiSangOnly;
+    public bool PortraitsOnly => portraitsOnly;
     public event Action<IdentityData> ResultRevealed;
 
     private void Awake()
     {
-        RestorePool();
         foreach (PortraitBinding binding in portraits)
         {
             if (binding != null && !string.IsNullOrEmpty(binding.identityId) && binding.texture != null)
                 portraitLookup[binding.identityId] = binding.texture;
         }
+        RestorePool();
         reel = GetComponent<RouletteAnimatior>();
         if (reel == null) reel = gameObject.AddComponent<RouletteAnimatior>();
         view = GetComponent<RoulletteUI>();
         if (view == null) view = gameObject.AddComponent<RoulletteUI>();
         view.Initialize(this);
-        view.ShowIdle(remaining.Count > 0 ? remaining[0] : null);
+        view.ShowIdle();
         Refresh("버튼을 눌러 인격을 뽑으세요.");
     }
 
@@ -82,7 +85,7 @@ public sealed class RouletteManager : MonoBehaviour
         if (!isActiveAndEnabled || IsSpinning) return;
         RestorePool();
         LastResult = null;
-        view.ShowIdle(remaining.Count > 0 ? remaining[0] : null);
+        view.ShowIdle();
         Refresh("전체 인격을 다시 추첨할 수 있습니다.");
     }
 
@@ -95,6 +98,8 @@ public sealed class RouletteManager : MonoBehaviour
     private void RestorePool()
     {
         remaining = IdentityDatabase.Default.CreateDrawPool(yiSangOnly ? "이상" : null);
+        if (portraitsOnly)
+            remaining.RemoveAll(identity => !portraitLookup.ContainsKey(identity.Id));
         totalCount = remaining.Count;
     }
 

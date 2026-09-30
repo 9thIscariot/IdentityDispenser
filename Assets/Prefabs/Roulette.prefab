@@ -50,7 +50,8 @@ MonoBehaviour:
   cycleSeconds: 1
   minimumCruiseSeconds: 1
   brakeSeconds: 4
-  yiSangOnly: 1
+  yiSangOnly: 0
+  portraitsOnly: 1
   portraits:
   - identityId: yi-sang-001
     texture: {fileID: 2800000, guid: 06816a3c3ba277244aebae063aa1f278, type: 3}
@@ -84,6 +85,350 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: 112c76547907e8f46968da57126cb01e, type: 3}
   - identityId: yi-sang-016
     texture: {fileID: 2800000, guid: d0b5964079665044996eb4a8abcdbc8f, type: 3}
+  - identityId: faust-001
+    texture: {fileID: 2800000, guid: cb9d88f0e8482e24fad27fb66f150975, type: 3}
+  - identityId: faust-002
+    texture: {fileID: 2800000, guid: 4bb32bbafae097a489829e6160ac3643, type: 3}
+  - identityId: faust-003
+    texture: {fileID: 2800000, guid: 5dc2de90aaeb5044dae07a593a461f32, type: 3}
+  - identityId: faust-004
+    texture: {fileID: 2800000, guid: 28aea64a9e91fb745984237f7d97f054, type: 3}
+  - identityId: faust-005
+    texture: {fileID: 2800000, guid: 0c63aca9561bf4149b8e5de881f8d5ee, type: 3}
+  - identityId: faust-006
+    texture: {fileID: 2800000, guid: 3f35820266c73c544b43d58c2ddba472, type: 3}
+  - identityId: faust-007
+    texture: {fileID: 2800000, guid: 227194df620c3a545bc046bb8483b6df, type: 3}
+  - identityId: faust-008
+    texture: {fileID: 2800000, guid: 02f7465d5acfb84448040b30b06cda45, type: 3}
+  - identityId: faust-009
+    texture: {fileID: 2800000, guid: 0493343cf967fff4390153d508a7a908, type: 3}
+  - identityId: faust-010
+    texture: {fileID: 2800000, guid: b699b1eb06d594342af9053ae7f96c5e, type: 3}
+  - identityId: faust-011
+    texture: {fileID: 2800000, guid: 1d6d3c3f31456bb40b1021bfde7cc84d, type: 3}
+  - identityId: faust-012
+    texture: {fileID: 2800000, guid: 1163991d377995443b38d506ec2dad34, type: 3}
+  - identityId: faust-013
+    texture: {fileID: 2800000, guid: 1fda47e8ec975fe428ed603886a93860, type: 3}
+  - identityId: faust-014
+    texture: {fileID: 2800000, guid: 6b539a6a7226bb34098d2ad4421c2272, type: 3}
+  - identityId: faust-015
+    texture: {fileID: 2800000, guid: 69b76c3918d7c8f498d1ff58dd6579ba, type: 3}
+  - identityId: faust-016
+    texture: {fileID: 2800000, guid: ffa4613f007183b4eb023dc05d62f6fa, type: 3}
+  - identityId: don-quixote-001
+    texture: {fileID: 2800000, guid: db58cbc6a0e105848b27ac82945af820, type: 3}
+  - identityId: don-quixote-002
+    texture: {fileID: 2800000, guid: 81635be819e870949811550c8e74590c, type: 3}
+  - identityId: don-quixote-003
+    texture: {fileID: 2800000, guid: 36c2cea7b383e5b49bedfab02f474447, type: 3}
+  - identityId: don-quixote-004
+    texture: {fileID: 2800000, guid: 35367ad637868fe479754c735041707a, type: 3}
+  - identityId: don-quixote-005
+    texture: {fileID: 2800000, guid: c894210c1954d79429f7416e7719b09e, type: 3}
+  - identityId: don-quixote-006
+    texture: {fileID: 2800000, guid: 70c4145dc99162c4a8ef0021ead90064, type: 3}
+  - identityId: don-quixote-007
+    texture: {fileID: 2800000, guid: e4b70a7bece6416428a719bf9edb7909, type: 3}
+  - identityId: don-quixote-008
+    texture: {fileID: 2800000, guid: 797c52498e10eda469b5a8ea6e52d7d1, type: 3}
+  - identityId: don-quixote-009
+    texture: {fileID: 2800000, guid: 4ff9ea80000eed946820937604dd68c8, type: 3}
+  - identityId: don-quixote-011
+    texture: {fileID: 2800000, guid: 818df9496e70a2649b24782554049b1f, type: 3}
+  - identityId: don-quixote-012
+    texture: {fileID: 2800000, guid: 5c795de8473f2ca4ab5b2db53f7f44d2, type: 3}
+  - identityId: don-quixote-013
+    texture: {fileID: 2800000, guid: 152e4201c795caa4e8a5b4d21390e0c4, type: 3}
+  - identityId: don-quixote-014
+    texture: {fileID: 2800000, guid: f84254d9620c20a42ac80017566e971a, type: 3}
+  - identityId: don-quixote-015
+    texture: {fileID: 2800000, guid: 0d95ac94ba6f26e49ae631e69454e726, type: 3}
+  - identityId: ryoshu-001
+    texture: {fileID: 2800000, guid: dbf5b61eda3e5444b9f593f6f5e2d457, type: 3}
+  - identityId: ryoshu-002
+    texture: {fileID: 2800000, guid: 4d614fb910d386e49a20ae17635570ce, type: 3}
+  - identityId: ryoshu-003
+    texture: {fileID: 2800000, guid: bc3d69b05f4a05748b820162fae30f6a, type: 3}
+  - identityId: ryoshu-004
+    texture: {fileID: 2800000, guid: 35f918735506cd149a297b9824f7976f, type: 3}
+  - identityId: ryoshu-005
+    texture: {fileID: 2800000, guid: 45f8514e075c73940995303e2ab58034, type: 3}
+  - identityId: ryoshu-006
+    texture: {fileID: 2800000, guid: 4e020d0effec43a4ea2dc47760cb3d42, type: 3}
+  - identityId: ryoshu-007
+    texture: {fileID: 2800000, guid: e125b4edda29845448108e3761a097c4, type: 3}
+  - identityId: ryoshu-008
+    texture: {fileID: 2800000, guid: 3240318635fdca44b88b3d3224c09355, type: 3}
+  - identityId: ryoshu-009
+    texture: {fileID: 2800000, guid: 5eb7d75c57c09f54ca69324b355a28ff, type: 3}
+  - identityId: ryoshu-010
+    texture: {fileID: 2800000, guid: f5032f08f2515184dbcb22840dcdd308, type: 3}
+  - identityId: ryoshu-011
+    texture: {fileID: 2800000, guid: 305d95bf2895af24484d4277152f24c7, type: 3}
+  - identityId: ryoshu-012
+    texture: {fileID: 2800000, guid: 4a7169a9cddd8ea459817ec144e330f1, type: 3}
+  - identityId: ryoshu-013
+    texture: {fileID: 2800000, guid: 00ea41b34ac5d5b4fa5744009cbf7793, type: 3}
+  - identityId: ryoshu-014
+    texture: {fileID: 2800000, guid: b91084d1093b7e04d9d3e81123ede764, type: 3}
+  - identityId: ryoshu-015
+    texture: {fileID: 2800000, guid: 6e5a2880c12ab82429441423652763b6, type: 3}
+  - identityId: ryoshu-016
+    texture: {fileID: 2800000, guid: 9a1405edb0e26684897eb3b96286a4bb, type: 3}
+  - identityId: meursault-001
+    texture: {fileID: 2800000, guid: c6e2552983b82214e9ec17d541dfde37, type: 3}
+  - identityId: meursault-002
+    texture: {fileID: 2800000, guid: 03e32b833e135e548a3ef831f6c36ee3, type: 3}
+  - identityId: meursault-003
+    texture: {fileID: 2800000, guid: 8125c6f61824f4c438caa0abbdc1988b, type: 3}
+  - identityId: meursault-004
+    texture: {fileID: 2800000, guid: 37ccd279ca23b5f44ac6fda2c553a488, type: 3}
+  - identityId: meursault-005
+    texture: {fileID: 2800000, guid: 26973bda49e95904094e618bbde27c3c, type: 3}
+  - identityId: meursault-006
+    texture: {fileID: 2800000, guid: 1d4c8f31fdd320340b3bc7af3beabd43, type: 3}
+  - identityId: meursault-007
+    texture: {fileID: 2800000, guid: ee28db23c15bdd744bc514feb264ae66, type: 3}
+  - identityId: meursault-008
+    texture: {fileID: 2800000, guid: eeba70a0c7b3a884ba0aa075bf4a9e04, type: 3}
+  - identityId: meursault-009
+    texture: {fileID: 2800000, guid: c914b2cad74b3f74ab684ad2f3822a8d, type: 3}
+  - identityId: meursault-010
+    texture: {fileID: 2800000, guid: f8fa5679ed4b28d46ad4c131fc9a9c9a, type: 3}
+  - identityId: meursault-011
+    texture: {fileID: 2800000, guid: 385cfa3f70c69854eba6e9a70afdc8af, type: 3}
+  - identityId: meursault-012
+    texture: {fileID: 2800000, guid: 2208b038782b039498accfaa949fb113, type: 3}
+  - identityId: meursault-013
+    texture: {fileID: 2800000, guid: 50a2d8004adc7c84d8ae48cd7cc1f364, type: 3}
+  - identityId: meursault-014
+    texture: {fileID: 2800000, guid: 2d7908cac72cbde469267b5c3f517ed4, type: 3}
+  - identityId: meursault-015
+    texture: {fileID: 2800000, guid: 175e3711d7627974183aa8461f300436, type: 3}
+  - identityId: hong-lu-001
+    texture: {fileID: 2800000, guid: f6b7e00d535223d4fb489e0e3b9ce94f, type: 3}
+  - identityId: hong-lu-002
+    texture: {fileID: 2800000, guid: e8ac3e83ef1d9944b88396f2e73f4e5a, type: 3}
+  - identityId: hong-lu-003
+    texture: {fileID: 2800000, guid: 066d277b77533aa4eb39aa4a6d98ce19, type: 3}
+  - identityId: hong-lu-004
+    texture: {fileID: 2800000, guid: ea1f5fb455674c7409ec373185068667, type: 3}
+  - identityId: hong-lu-005
+    texture: {fileID: 2800000, guid: a84c0f1b9392cef40bf8e1210795bfa5, type: 3}
+  - identityId: hong-lu-006
+    texture: {fileID: 2800000, guid: 3aa65f7ca88c3ae4198fb93ff6621a32, type: 3}
+  - identityId: hong-lu-007
+    texture: {fileID: 2800000, guid: 58a5a919ca0d74a43b2bc943635e48f0, type: 3}
+  - identityId: hong-lu-008
+    texture: {fileID: 2800000, guid: 29fcc06b2e145ae40bed466f63ba9f2f, type: 3}
+  - identityId: hong-lu-009
+    texture: {fileID: 2800000, guid: ba686b6c9544cd24fae09af0614359a8, type: 3}
+  - identityId: hong-lu-010
+    texture: {fileID: 2800000, guid: 0857409d717ba0b439728098dc1dbbfa, type: 3}
+  - identityId: hong-lu-011
+    texture: {fileID: 2800000, guid: 0aa0933821b3c424791327fc0f27ca54, type: 3}
+  - identityId: hong-lu-012
+    texture: {fileID: 2800000, guid: ea95d9b8b5b04cb41bc36871cc66b2ef, type: 3}
+  - identityId: hong-lu-013
+    texture: {fileID: 2800000, guid: 0b3f39cc13b187c43be0feee0ba7215c, type: 3}
+  - identityId: hong-lu-014
+    texture: {fileID: 2800000, guid: 814c72e2f57cbe9459a43df06638dbf4, type: 3}
+  - identityId: hong-lu-015
+    texture: {fileID: 2800000, guid: 7457b027ce7d88b46b10f9c772e2d8f3, type: 3}
+  - identityId: hong-lu-016
+    texture: {fileID: 2800000, guid: d6b381ba8297b184b8eca9874c6ae9b0, type: 3}
+  - identityId: heathcliff-001
+    texture: {fileID: 2800000, guid: 071cbe420c01bba4d80b6d177b343f3d, type: 3}
+  - identityId: heathcliff-002
+    texture: {fileID: 2800000, guid: 0711445aeea1d5b409d5676b6b0ff579, type: 3}
+  - identityId: heathcliff-003
+    texture: {fileID: 2800000, guid: 6beb4c46e93ecc044a6f2843a483bf26, type: 3}
+  - identityId: heathcliff-004
+    texture: {fileID: 2800000, guid: e7320e65dea52ef408ae9b88410d656d, type: 3}
+  - identityId: heathcliff-005
+    texture: {fileID: 2800000, guid: 8b5079aa5187e824eb8ea3227b8e7ffc, type: 3}
+  - identityId: heathcliff-006
+    texture: {fileID: 2800000, guid: 19531c4b695d8ad44a447edd03319a89, type: 3}
+  - identityId: heathcliff-007
+    texture: {fileID: 2800000, guid: 52c12d6da8e84134484e484864fcced6, type: 3}
+  - identityId: heathcliff-008
+    texture: {fileID: 2800000, guid: c2d2980836c61494da2ca148cb1b0743, type: 3}
+  - identityId: heathcliff-009
+    texture: {fileID: 2800000, guid: 8fad936aef9f4a04582954565507316a, type: 3}
+  - identityId: heathcliff-010
+    texture: {fileID: 2800000, guid: 82a986a1ca507bf49a4eb34599ea85b8, type: 3}
+  - identityId: heathcliff-011
+    texture: {fileID: 2800000, guid: 621b5d056a796d0459d7063a71adc908, type: 3}
+  - identityId: heathcliff-012
+    texture: {fileID: 2800000, guid: 583e51c3b54db764f9865236a7276787, type: 3}
+  - identityId: heathcliff-013
+    texture: {fileID: 2800000, guid: 507ba1eedf22bef44946031da9010abe, type: 3}
+  - identityId: heathcliff-014
+    texture: {fileID: 2800000, guid: 169d3ac741d5bec4fba7dea50960769c, type: 3}
+  - identityId: heathcliff-015
+    texture: {fileID: 2800000, guid: 128a503b6f7a039488a6ebcb8e141236, type: 3}
+  - identityId: heathcliff-016
+    texture: {fileID: 2800000, guid: 46a7059fddb862d4e9e85a4de9e324b8, type: 3}
+  - identityId: ishmael-001
+    texture: {fileID: 2800000, guid: d08b8b576857348408f5bd88ca95f4b9, type: 3}
+  - identityId: ishmael-002
+    texture: {fileID: 2800000, guid: ad17133834bb5224db3f57a3a65bbdbf, type: 3}
+  - identityId: ishmael-003
+    texture: {fileID: 2800000, guid: 6a735b23a0f05c44ea041adbbfba7ffb, type: 3}
+  - identityId: ishmael-004
+    texture: {fileID: 2800000, guid: 964e81b2b7d86944ea7ae052c4e70de6, type: 3}
+  - identityId: ishmael-005
+    texture: {fileID: 2800000, guid: 20554b09054484243832f44cffd2863f, type: 3}
+  - identityId: ishmael-006
+    texture: {fileID: 2800000, guid: 50571efc455782d47aa239126ef036ce, type: 3}
+  - identityId: ishmael-007
+    texture: {fileID: 2800000, guid: 277f8f879c895d8418dccd5693c46df0, type: 3}
+  - identityId: ishmael-008
+    texture: {fileID: 2800000, guid: d710e855a9c608440a08f564fe7a34e0, type: 3}
+  - identityId: ishmael-009
+    texture: {fileID: 2800000, guid: dd435231fd277eb4eb16f8aeb1ac30b1, type: 3}
+  - identityId: ishmael-010
+    texture: {fileID: 2800000, guid: 55fa26498616aea488d6bd485293776a, type: 3}
+  - identityId: ishmael-011
+    texture: {fileID: 2800000, guid: 8da12d43fde19c0408e24dac70528634, type: 3}
+  - identityId: ishmael-012
+    texture: {fileID: 2800000, guid: 52229acd750fc374e96fd80012c0613c, type: 3}
+  - identityId: ishmael-013
+    texture: {fileID: 2800000, guid: 125721934e886424982e9752029f131c, type: 3}
+  - identityId: ishmael-014
+    texture: {fileID: 2800000, guid: 3dae88e0283944d4fb044584f9e458cf, type: 3}
+  - identityId: ishmael-015
+    texture: {fileID: 2800000, guid: a97d9cbc834eb9b4b8100090d8f2299c, type: 3}
+  - identityId: ishmael-016
+    texture: {fileID: 2800000, guid: aa7c27ca49a0d9a439bfbe08d13c5dd8, type: 3}
+  - identityId: rodion-001
+    texture: {fileID: 2800000, guid: f79d78ae58226524faec221d9162764a, type: 3}
+  - identityId: rodion-002
+    texture: {fileID: 2800000, guid: f61201cc011bfaf4393cc91eaa8cc958, type: 3}
+  - identityId: rodion-003
+    texture: {fileID: 2800000, guid: ed337a3ca45e9fb40a7d7bdd457bfe9d, type: 3}
+  - identityId: rodion-004
+    texture: {fileID: 2800000, guid: ed561e1ca6fabb048a54ad5d041d6f68, type: 3}
+  - identityId: rodion-005
+    texture: {fileID: 2800000, guid: c4a5e67c2b1d8ad4eae06c44134f042a, type: 3}
+  - identityId: rodion-006
+    texture: {fileID: 2800000, guid: aea581d580cb58a4a91762da722603f1, type: 3}
+  - identityId: rodion-007
+    texture: {fileID: 2800000, guid: 0ee7ba67d4e1c604e8725aaa3698cf74, type: 3}
+  - identityId: rodion-008
+    texture: {fileID: 2800000, guid: 3f0bca6ea571e98429448e4dbcda19d6, type: 3}
+  - identityId: rodion-009
+    texture: {fileID: 2800000, guid: eadc4913c5af72a49953878d3e79bb91, type: 3}
+  - identityId: rodion-010
+    texture: {fileID: 2800000, guid: fe9bf4aed83de5b4c8f79b620c007d8b, type: 3}
+  - identityId: rodion-011
+    texture: {fileID: 2800000, guid: b3e546db73b30914e91af80700fc6f47, type: 3}
+  - identityId: rodion-012
+    texture: {fileID: 2800000, guid: 9bbcb6b59d8b2a64bb8ba81920a19af1, type: 3}
+  - identityId: rodion-013
+    texture: {fileID: 2800000, guid: 0e5d967c8e8d0db448338c0e56ed520d, type: 3}
+  - identityId: rodion-014
+    texture: {fileID: 2800000, guid: cd9c9c0d40c075d4f80922eb38f059a2, type: 3}
+  - identityId: rodion-015
+    texture: {fileID: 2800000, guid: fcdfa6e7bd54528469fe5dea5a1c93bc, type: 3}
+  - identityId: rodion-016
+    texture: {fileID: 2800000, guid: 883372ca3868238469bfcc6838a53410, type: 3}
+  - identityId: rodion-017
+    texture: {fileID: 2800000, guid: 66903615feae0774abe0a6f7521f7269, type: 3}
+  - identityId: sinclair-001
+    texture: {fileID: 2800000, guid: 5e266e3cf448693439386c489081de23, type: 3}
+  - identityId: sinclair-002
+    texture: {fileID: 2800000, guid: 7dea7eea9c31447418126518f4cc166a, type: 3}
+  - identityId: sinclair-003
+    texture: {fileID: 2800000, guid: c8e628c27ba84344f9ac0c62a494a6a8, type: 3}
+  - identityId: sinclair-004
+    texture: {fileID: 2800000, guid: ba2c7f4ad9b974149adcb83a3736e203, type: 3}
+  - identityId: sinclair-005
+    texture: {fileID: 2800000, guid: 79f492d005661f9459ece880120b9f06, type: 3}
+  - identityId: sinclair-006
+    texture: {fileID: 2800000, guid: dfacc13405304b04397611066bb066d1, type: 3}
+  - identityId: sinclair-007
+    texture: {fileID: 2800000, guid: a79321a4e14d8cc46aac7c3710ab4ce6, type: 3}
+  - identityId: sinclair-008
+    texture: {fileID: 2800000, guid: 888f6e0315a04694db962b21b9a6de32, type: 3}
+  - identityId: sinclair-009
+    texture: {fileID: 2800000, guid: 01d3713ba314ae64bb80b29122a49266, type: 3}
+  - identityId: sinclair-010
+    texture: {fileID: 2800000, guid: 4c81a7b401f3a764898bda1389a87e38, type: 3}
+  - identityId: sinclair-011
+    texture: {fileID: 2800000, guid: b5ac7186ec4df4648b175f99e6d10a9e, type: 3}
+  - identityId: sinclair-012
+    texture: {fileID: 2800000, guid: 59e2b1b19b5df3e4c949f3782c6a659b, type: 3}
+  - identityId: sinclair-013
+    texture: {fileID: 2800000, guid: a623e7bea2b5ea64fb17c938f32b18b3, type: 3}
+  - identityId: sinclair-014
+    texture: {fileID: 2800000, guid: 81f7622460ebd834eb538f615215bebb, type: 3}
+  - identityId: sinclair-015
+    texture: {fileID: 2800000, guid: 22506de75e63f974586a707fce0f3a9a, type: 3}
+  - identityId: outis-001
+    texture: {fileID: 2800000, guid: 08f82ae2dcbb7a947b1e8c7539346bb9, type: 3}
+  - identityId: outis-002
+    texture: {fileID: 2800000, guid: b5584a7fa3bb47f4f83ab5c76f0ea0e9, type: 3}
+  - identityId: outis-003
+    texture: {fileID: 2800000, guid: 13dc378b6a0795f4c8438dc293104d5c, type: 3}
+  - identityId: outis-004
+    texture: {fileID: 2800000, guid: b1f1614e79df30b479f1e22fcc011867, type: 3}
+  - identityId: outis-005
+    texture: {fileID: 2800000, guid: d45447caf95028f47861f48ff8156928, type: 3}
+  - identityId: outis-006
+    texture: {fileID: 2800000, guid: 17bf61b48b7294442adcebdf6c455613, type: 3}
+  - identityId: outis-007
+    texture: {fileID: 2800000, guid: 21a0e0e6d7c6c924bb681c180c73cdbf, type: 3}
+  - identityId: outis-008
+    texture: {fileID: 2800000, guid: aa09688dbc27d6e4dbf44e4ef8cf5a08, type: 3}
+  - identityId: outis-009
+    texture: {fileID: 2800000, guid: 7c8c78ce59de03a4a88ba02609dc99f8, type: 3}
+  - identityId: outis-010
+    texture: {fileID: 2800000, guid: a60f7c5be32fb6f4faef011eab0f9ba3, type: 3}
+  - identityId: outis-011
+    texture: {fileID: 2800000, guid: 063848a7622d78d489b8a3ace60a53a3, type: 3}
+  - identityId: outis-012
+    texture: {fileID: 2800000, guid: b458a9081ed9a7444a46a82a8bf04c1b, type: 3}
+  - identityId: outis-013
+    texture: {fileID: 2800000, guid: b1eb6b80a15f4be428eb58f90239c2a5, type: 3}
+  - identityId: outis-014
+    texture: {fileID: 2800000, guid: 87984b3d3e826be4ebef06aecce9cb70, type: 3}
+  - identityId: outis-015
+    texture: {fileID: 2800000, guid: 0d57b4172d2202d4d8cf24a2536c56b3, type: 3}
+  - identityId: gregor-001
+    texture: {fileID: 2800000, guid: c47bf3997f5cd4e49b6223dad5d3a3ef, type: 3}
+  - identityId: gregor-002
+    texture: {fileID: 2800000, guid: a10b6557dad9517438a14490d9f05123, type: 3}
+  - identityId: gregor-003
+    texture: {fileID: 2800000, guid: 1be8b03042422fe498bc35206bf19e69, type: 3}
+  - identityId: gregor-004
+    texture: {fileID: 2800000, guid: 7c2cae0a4dc7af04dada0c1cfd44b9bc, type: 3}
+  - identityId: gregor-005
+    texture: {fileID: 2800000, guid: 7275d0c243eed0c4688f2a96d5084ab3, type: 3}
+  - identityId: gregor-006
+    texture: {fileID: 2800000, guid: b90eb750d751439489d9aea4ab160ad8, type: 3}
+  - identityId: gregor-007
+    texture: {fileID: 2800000, guid: 6625ce42ce1185d4b81148321cd558a3, type: 3}
+  - identityId: gregor-008
+    texture: {fileID: 2800000, guid: 9752f0fb7b7c7b74488f072aadc8d7bd, type: 3}
+  - identityId: gregor-009
+    texture: {fileID: 2800000, guid: c643de68348c43948bbb22eb711a43eb, type: 3}
+  - identityId: gregor-010
+    texture: {fileID: 2800000, guid: 0ce930c40d5379b45afd4391918a2481, type: 3}
+  - identityId: gregor-011
+    texture: {fileID: 2800000, guid: 9431d3307dddb0e4db0ff0cd5db6351f, type: 3}
+  - identityId: gregor-012
+    texture: {fileID: 2800000, guid: de29e0f928beca64e9c25d4cf3a9478a, type: 3}
+  - identityId: gregor-013
+    texture: {fileID: 2800000, guid: 1aca426b3cb8061498a78b0a470f7f5e, type: 3}
+  - identityId: gregor-014
+    texture: {fileID: 2800000, guid: 338ae17d1f83b5d4ca80cf07ae944915, type: 3}
+  - identityId: gregor-015
+    texture: {fileID: 2800000, guid: a6bfd097f5e719c488db2dbf12e3bb8c, type: 3}
+  - identityId: gregor-016
+    texture: {fileID: 2800000, guid: edadf449068f76f4382a89f45c415b9c, type: 3}
 --- !u!114 &902100004
 MonoBehaviour:
   m_ObjectHideFlags: 0
