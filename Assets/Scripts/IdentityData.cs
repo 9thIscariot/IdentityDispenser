@@ -1,6 +1,5 @@
 using System;
 
-/// <summary>등급이나 추첨 가중치 없이 인격 하나를 식별하는 데이터입니다.</summary>
 public sealed class IdentityData
 {
     public string Id { get; }

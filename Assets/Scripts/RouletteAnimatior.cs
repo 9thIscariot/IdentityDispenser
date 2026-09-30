@@ -11,14 +11,21 @@ public sealed class RouletteAnimatior : MonoBehaviour
     private Action completed;
     private Action cancelled;
     private double elapsed;
+    private double position, speed;
+    private int target;
+    private float cycle, braking;
 
     public void Play(IReadOnlyList<IdentityData> candidates, int targetIndex,
-        float cycleSeconds, float cruiseSeconds, float brakeSeconds,
+        float cycleSeconds, float brakeSeconds,
         Action<IdentityData, IdentityData, float> onFrame, Action onComplete, Action onCancel)
     {
         Cancel();
-        plan = new ReelSpinPlan(candidates.Count, targetIndex, cycleSeconds, cruiseSeconds, brakeSeconds);
         entries = candidates;
+        target = targetIndex;
+        cycle = cycleSeconds;
+        braking = brakeSeconds;
+        speed = candidates.Count / (double)cycleSeconds;
+        position = 0;
         render = onFrame;
         completed = onComplete;
         cancelled = onCancel;
@@ -28,13 +35,26 @@ public sealed class RouletteAnimatior : MonoBehaviour
 
     private void Update()
     {
-        if (plan == null) return;
+        if (entries == null) return;
+        if (plan == null)
+        {
+            position = (position + speed * Time.unscaledDeltaTime) % entries.Count;
+            RenderPosition(position);
+            return;
+        }
         elapsed += Time.unscaledDeltaTime;
         RenderPosition(plan.PositionAt(elapsed));
         if (elapsed < plan.Duration) return;
         Action callback = completed;
         Clear();
         callback?.Invoke();
+    }
+
+    public void RequestStop()
+    {
+        if (entries == null || plan != null) return;
+        plan = ReelSpinPlan.BrakeFrom(entries.Count, target, cycle, braking, position);
+        elapsed = 0;
     }
 
     private void RenderPosition(double position)

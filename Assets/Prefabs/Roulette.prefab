@@ -48,10 +48,11 @@ MonoBehaviour:
   m_Name:
   m_EditorClassIdentifier:
   cycleSeconds: 1
-  minimumCruiseSeconds: 1
   brakeSeconds: 4
   yiSangOnly: 0
   portraitsOnly: 1
+  allowSinnerDuplicates: 1
+  allowIdentityDuplicates: 0
   portraits:
   - identityId: yi-sang-001
     texture: {fileID: 2800000, guid: 06816a3c3ba277244aebae063aa1f278, type: 3}

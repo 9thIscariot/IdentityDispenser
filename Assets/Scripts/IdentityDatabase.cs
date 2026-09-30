@@ -13,7 +13,7 @@ public sealed class IdentityDatabase
 
     public IReadOnlyList<IdentityData> Identities { get; } = Array.AsReadOnly(new[]
     {
-        // 이상 (16)
+        // 이상
         new IdentityData("yi-sang-001", "이상", "검계 살수"),
         new IdentityData("yi-sang-002", "이상", "개화 E.G.O::동백"),
         new IdentityData("yi-sang-003", "이상", "W사 3등급 정리 요원"),
@@ -31,7 +31,7 @@ public sealed class IdentityDatabase
         new IdentityData("yi-sang-015", "이상", "LCE E.G.O::초롱"),
         new IdentityData("yi-sang-016", "이상", "LCB 수감자"),
 
-        // 파우스트 (16)
+        // 파우스트
         new IdentityData("faust-001", "파우스트", "쥐는 자"),
         new IdentityData("faust-002", "파우스트", "남부 세븐 협회 4과"),
         new IdentityData("faust-003", "파우스트", "로보토미 E.G.O::후회"),
@@ -49,7 +49,7 @@ public sealed class IdentityDatabase
         new IdentityData("faust-015", "파우스트", "워더링하이츠 버틀러"),
         new IdentityData("faust-016", "파우스트", "LCB 수감자"),
 
-        // 돈키호테 (15) - 이미지 업로드 예정 칸은 사용자 지정 이름으로 반영했습니다.
+        // 돈키호테
         new IdentityData("don-quixote-001", "돈키호테", "W사 3등급 정리 요원"),
         new IdentityData("don-quixote-002", "돈키호테", "남부 섕크 협회 5과 부장"),
         new IdentityData("don-quixote-003", "돈키호테", "중지 작은 아우"),
@@ -66,7 +66,7 @@ public sealed class IdentityDatabase
         new IdentityData("don-quixote-014", "돈키호테", "검계 살수"),
         new IdentityData("don-quixote-015", "돈키호테", "LCB 수감자"),
 
-        // 료슈 (16)
+        // 료슈
         new IdentityData("ryoshu-001", "료슈", "흑운회 와카슈"),
         new IdentityData("ryoshu-002", "료슈", "료.고.파. 주방장"),
         new IdentityData("ryoshu-003", "료슈", "W사 3등급 정리 요원"),
@@ -84,7 +84,7 @@ public sealed class IdentityDatabase
         new IdentityData("ryoshu-015", "료슈", "20구 유로지비"),
         new IdentityData("ryoshu-016", "료슈", "LCB 수감자"),
 
-        // 뫼르소 (15)
+        // 뫼르소
         new IdentityData("meursault-001", "뫼르소", "W사 2등급 정리 요원"),
         new IdentityData("meursault-002", "뫼르소", "N사 큰 망치"),
         new IdentityData("meursault-003", "뫼르소", "R사 제 4무리 코뿔소팀"),
@@ -101,7 +101,7 @@ public sealed class IdentityDatabase
         new IdentityData("meursault-014", "뫼르소", "데드레빗츠 보스"),
         new IdentityData("meursault-015", "뫼르소", "LCB 수감자"),
 
-        // 홍루 (16) - 중복 첨부된 이미지는 한 번만 반영했습니다.
+        // 홍루
         new IdentityData("hong-lu-001", "홍루", "콩콩이파 두목"),
         new IdentityData("hong-lu-002", "홍루", "K사 3등급 적출직 직원"),
         new IdentityData("hong-lu-003", "홍루", "남부 디에치 협회 4과"),
@@ -119,7 +119,7 @@ public sealed class IdentityDatabase
         new IdentityData("hong-lu-015", "홍루", "송곳니 사냥 사무소 해결사"),
         new IdentityData("hong-lu-016", "홍루", "LCB 수감자"),
 
-        // 히스클리프 (16) - 중복 첨부된 이미지는 한 번만 반영했습니다.
+        // 히스클리프
         new IdentityData("heathcliff-001", "히스클리프", "R사 제 4무리 토끼팀"),
         new IdentityData("heathcliff-002", "히스클리프", "로보토미 E.G.O::여우비"),
         new IdentityData("heathcliff-003", "히스클리프", "피쿼드호 작살잡이"),
@@ -137,7 +137,7 @@ public sealed class IdentityDatabase
         new IdentityData("heathcliff-015", "히스클리프", "멀티크랙 사무소 해결사"),
         new IdentityData("heathcliff-016", "히스클리프", "LCB 수감자"),
 
-        // 이스마엘 (16)
+        // 이스마엘
         new IdentityData("ishmael-001", "이스마엘", "R사 제 4무리 순록팀"),
         new IdentityData("ishmael-002", "이스마엘", "남부 리우 협회 4과"),
         new IdentityData("ishmael-003", "이스마엘", "어금니 보트 센터 해결사"),
@@ -155,7 +155,7 @@ public sealed class IdentityDatabase
         new IdentityData("ishmael-015", "이스마엘", "에드가 가문 버틀러"),
         new IdentityData("ishmael-016", "이스마엘", "LCB 수감자"),
 
-        // 로쟈 (17)
+        // 로쟈
         new IdentityData("rodion-001", "로쟈", "흑운회 와카슈"),
         new IdentityData("rodion-002", "로쟈", "장미스패너 공방 대표"),
         new IdentityData("rodion-003", "로쟈", "남부 디에치 협회 4과"),
@@ -174,7 +174,7 @@ public sealed class IdentityDatabase
         new IdentityData("rodion-016", "로쟈", "T사 2등급 징수직 직원"),
         new IdentityData("rodion-017", "로쟈", "LCB 수감자"),
 
-        // 싱클레어 (15)
+        // 싱클레어
         new IdentityData("sinclair-001", "싱클레어", "검계 살수"),
         new IdentityData("sinclair-002", "싱클레어", "쥐어들 자"),
         new IdentityData("sinclair-003", "싱클레어", "남부 섕크 협회 4과 부장"),
@@ -191,7 +191,7 @@ public sealed class IdentityDatabase
         new IdentityData("sinclair-014", "싱클레어", "서부 츠바이 협회 3과"),
         new IdentityData("sinclair-015", "싱클레어", "LCB 수감자"),
 
-        // 오티스 (15)
+        // 오티스
         new IdentityData("outis-001", "오티스", "남부 세븐 협회 6과 부장"),
         new IdentityData("outis-002", "오티스", "어금니 사무소 해결사"),
         new IdentityData("outis-003", "오티스", "로보토미 E.G.O::마탄"),
@@ -208,7 +208,7 @@ public sealed class IdentityDatabase
         new IdentityData("outis-014", "오티스", "약지 점묘파 스튜던트"),
         new IdentityData("outis-015", "오티스", "LCB 수감자"),
 
-        // 그레고르 (16)
+        // 그레고르
         new IdentityData("gregor-001", "그레고르", "G사 일등대리"),
         new IdentityData("gregor-002", "그레고르", "남부 츠바이 협회 4과"),
         new IdentityData("gregor-003", "그레고르", "쌍갈고리 해적단 부선장"),
@@ -227,7 +227,6 @@ public sealed class IdentityDatabase
         new IdentityData("gregor-016", "그레고르", "LCB 수감자"),
     });
 
-    /// <summary>추첨된 항목을 제거해도 원본 목록에 영향을 주지 않는 복사본입니다.</summary>
     public List<IdentityData> CreateDrawPool(string sinnerName = null)
     {
         var pool = new List<IdentityData>();

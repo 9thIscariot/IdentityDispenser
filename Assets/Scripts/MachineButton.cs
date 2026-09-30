@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>마우스와 키보드의 버튼 상태에 맞춰 눌림 이미지와 글자 위치를 전환합니다.</summary>
 public sealed class MachineButton : Button
 {
     private RawImage face;

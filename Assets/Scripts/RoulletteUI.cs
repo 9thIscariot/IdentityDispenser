@@ -16,8 +16,28 @@ public sealed class RoulletteUI : MonoBehaviour
     private const float ScreenWidth = 1040, CellHeight = 520;
     private RectTransform currentRow, nextRow;
     private RawImage currentPortrait, nextPortrait;
-    private Text resultName, counter, status;
-    private Button spinButton, resetButton;
+    private Text resultName, status;
+    private Button spinButton, stopButton;
+    private RectTransform settingsPanel, drawPage, identityPage, displayPage;
+    private Button settingsButton;
+    private SelectionVisual[] categories, sinnerChoices, identityChoices, displayChoices;
+    private SelectionVisual[] sinnerSelections;
+    private int selectedCategory;
+    private static readonly Color SelectedColor = Color.white;
+    private static readonly Color UnselectedColor = new Color(0.84f, 0.12f, 0.12f);
+
+    private sealed class SelectionVisual
+    {
+        public Text Label;
+        public Image[] Edges;
+
+        public void SetSelected(bool selected)
+        {
+            Color color = selected ? SelectedColor : UnselectedColor;
+            Label.color = color;
+            foreach (Image edge in Edges) edge.color = color;
+        }
+    }
     private RouletteManager manager;
     private Font generatedFont;
 
@@ -60,17 +80,22 @@ public sealed class RoulletteUI : MonoBehaviour
         nextPortrait = MakePortrait(nextRow);
         background.transform.SetAsLastSibling();
 
-        // 좌우 사각 패널은 클릭 기능이 없는 상태 표시창으로 사용합니다.
-        Panel("CounterPlate", machine, At(514, 754), new Vector2(154, 134), new Color(0.055f, 0.065f, 0.065f));
-        counter = Label("Counter", machine, At(514, 754), new Vector2(148, 122), "", 23, new Color(0.6f, 0.86f, 0.72f));
-        Panel("StatusPlate", machine, At(1410, 757), new Vector2(154, 134), new Color(0.055f, 0.065f, 0.065f));
-        status = Label("Status", machine, At(1410, 757), new Vector2(148, 122), "대기", 22, new Color(0.85f, 0.75f, 0.5f));
+        // 자판기 이미지 자체의 패널 질감을 살리고, 왼쪽 패널은 설정 버튼으로 사용합니다.
+        Text settingsLabel = Label("Settings", machine, At(514, 754), new Vector2(148, 122),
+            "설정", 24, Color.black);
+        settingsLabel.fontStyle = FontStyle.Bold;
+        settingsLabel.raycastTarget = true;
+        settingsButton = settingsLabel.gameObject.AddComponent<Button>();
+        settingsButton.targetGraphic = settingsLabel;
+        settingsButton.onClick.AddListener(ToggleSettings);
+        status = Label("Status", machine, At(1410, 757), new Vector2(148, 122), "대기", 24, Color.black);
+        status.fontStyle = FontStyle.Bold;
 
-        spinButton = MakeButton("Spin", machine, At(744, 751), "인격\n뽑기");
-        resetButton = MakeButton("Reset", machine, At(959, 751), "전체\n초기화");
-        Button quitButton = MakeButton("Quit", machine, At(1177, 751), "룰렛\n종료");
+        spinButton = MakeButton("Spin", machine, At(744, 751), "뽑기");
+        stopButton = MakeButton("Stop", machine, At(959, 751), "정지");
+        Button quitButton = MakeButton("Quit", machine, At(1177, 751), "종료");
         spinButton.onClick.AddListener(manager.Spin);
-        resetButton.onClick.AddListener(manager.ResetDraws);
+        stopButton.onClick.AddListener(manager.StopSpin);
         quitButton.onClick.AddListener(manager.QuitRoulette);
 
         Panel("Nameplate", machine, At(960, 878), new Vector2(620, 44), new Color(0.045f, 0.045f, 0.045f));
@@ -79,6 +104,8 @@ public sealed class RoulletteUI : MonoBehaviour
         resultName.resizeTextForBestFit = true;
         resultName.resizeTextMinSize = 12;
         resultName.resizeTextMaxSize = 24;
+
+        BuildSettingsScreen(viewport);
 
         if (FindFirstObjectByType<EventSystem>() == null)
         {
@@ -113,11 +140,12 @@ public sealed class RoulletteUI : MonoBehaviour
 
     public void Refresh(int remaining, int total, bool spinning, string message)
     {
-        counter.text = $"남은 인격\n{remaining} / {total}";
-        status.text = spinning ? "추첨 중" : remaining == 0 ? "추첨 완료\n초기화 필요" :
-            manager.LastResult != null ? "추첨 완료" : manager.YiSangOnly ? "대기\n이상 한정" : "대기";
-        spinButton.interactable = !spinning && remaining > 0;
-        resetButton.interactable = !spinning;
+        status.text = spinning ? "뽑기 중" :
+            manager.LastResult != null ? "뽑기 완료" : "대기";
+        spinButton.interactable = !spinning && remaining > 0 &&
+            (settingsPanel == null || !settingsPanel.gameObject.activeSelf);
+        stopButton.interactable = spinning && !manager.IsStopping;
+        if (settingsButton != null) settingsButton.interactable = !spinning;
         if (spinning) resultName.text = "";
     }
 
@@ -174,6 +202,164 @@ public sealed class RoulletteUI : MonoBehaviour
         label.fontStyle = FontStyle.Bold;
         button.Configure(face, buttonNormal, buttonPressed, label);
         return button;
+    }
+
+    private void ToggleSettings()
+    {
+        if (manager.IsSpinning) return;
+        settingsPanel.gameObject.SetActive(!settingsPanel.gameObject.activeSelf);
+        if (settingsPanel.gameObject.activeSelf) RenderSettings();
+        Refresh(manager.RemainingCount, 0, manager.IsSpinning, "");
+    }
+
+    private void BuildSettingsScreen(RectTransform viewport)
+    {
+        // 화면 위에 불투명한 검은 면을 두되 자판기 PNG 프레임의 뒤쪽에 배치합니다.
+        settingsPanel = Panel("SettingsScreen", viewport, Vector2.zero,
+            new Vector2(ScreenWidth, CellHeight), Color.black);
+        categories = new[]
+        {
+            OutlinedButton("DrawCategory", settingsPanel, new Vector2(-363, 144),
+                new Vector2(218, 72), "뽑기 설정", 25, () => SelectSettingsCategory(0)),
+            OutlinedButton("IdentityCategory", settingsPanel, new Vector2(-363, 46),
+                new Vector2(218, 72), "인격 설정", 25, () => SelectSettingsCategory(1)),
+            OutlinedButton("DisplayCategory", settingsPanel, new Vector2(-363, -52),
+                new Vector2(218, 72), "화면 설정", 25, () => SelectSettingsCategory(2))
+        };
+        OutlinedButton("CloseSettings", settingsPanel, new Vector2(-363, -160),
+            new Vector2(218, 72), "닫기", 25, ToggleSettings).SetSelected(false);
+        Panel("Divider", settingsPanel, new Vector2(-229, 0),
+            new Vector2(2, 426), UnselectedColor);
+
+        drawPage = Rect("DrawSettings", settingsPanel, new Vector2(131, 0), new Vector2(690, 432));
+        Frame(drawPage, new Vector2(690, 432));
+        Label("DrawTitle", drawPage, new Vector2(0, 164), new Vector2(610, 54),
+            "뽑기 설정", 30, SelectedColor).fontStyle = FontStyle.Bold;
+        SettingsRow(drawPage, "SinnerDuplicates", "수감자 중복 설정", 67,
+            out sinnerChoices, value => { manager.SetSinnerDuplicates(value); RenderSettings(); });
+        SettingsRow(drawPage, "IdentityDuplicates", "인격 중복 설정", -61,
+            out identityChoices, value => { manager.SetIdentityDuplicates(value); RenderSettings(); });
+
+        identityPage = Rect("IdentitySettings", settingsPanel, new Vector2(131, 0), new Vector2(690, 432));
+        Frame(identityPage, new Vector2(690, 432));
+        Label("IdentityTitle", identityPage, new Vector2(0, 174), new Vector2(610, 50),
+            "인격 설정", 30, SelectedColor).fontStyle = FontStyle.Bold;
+        sinnerSelections = new SelectionVisual[RouletteManager.SinnerOrder.Length];
+        for (int i = 0; i < sinnerSelections.Length; i++)
+        {
+            string sinner = RouletteManager.SinnerOrder[i];
+            int column = i % 3, row = i / 3;
+            sinnerSelections[i] = OutlinedButton("Sinner" + (i + 1), identityPage,
+                new Vector2(-220 + column * 220, 93 - row * 77),
+                new Vector2(184, 60), sinner, 23, () => ToggleSinner(sinner));
+        }
+
+        displayPage = Rect("DisplaySettings", settingsPanel, new Vector2(131, 0), new Vector2(690, 432));
+        Frame(displayPage, new Vector2(690, 432));
+        Label("DisplayTitle", displayPage, new Vector2(0, 164), new Vector2(610, 54),
+            "화면 설정", 30, SelectedColor).fontStyle = FontStyle.Bold;
+        Label("DisplayModeLabel", displayPage, new Vector2(-154, 54), new Vector2(280, 58),
+            "화면 모드", 25, SelectedColor).fontStyle = FontStyle.Bold;
+        displayChoices = new[]
+        {
+            OutlinedButton("Fullscreen", displayPage, new Vector2(86, 54),
+                new Vector2(144, 66), "전체 화면", 22, () => SetDisplayMode(true)),
+            OutlinedButton("Windowed", displayPage, new Vector2(250, 54),
+                new Vector2(144, 66), "창 모드", 22, () => SetDisplayMode(false))
+        };
+        settingsPanel.gameObject.SetActive(false);
+    }
+
+    private void SettingsRow(RectTransform parent, string name, string caption, float y,
+        out SelectionVisual[] choices, System.Action<bool> onChange)
+    {
+        Text heading = Label(name + "Label", parent, new Vector2(-154, y),
+            new Vector2(280, 62), caption, 23, SelectedColor);
+        heading.fontStyle = FontStyle.Bold;
+        choices = new[]
+        {
+            OutlinedButton(name + "On", parent, new Vector2(91, y),
+                new Vector2(98, 66), "ON", 25, () => onChange(true)),
+            OutlinedButton(name + "Off", parent, new Vector2(246, y),
+                new Vector2(98, 66), "OFF", 25, () => onChange(false))
+        };
+    }
+
+    private void SelectSettingsCategory(int index)
+    {
+        selectedCategory = index;
+        RenderSettings();
+    }
+
+    private void ToggleSinner(string sinner)
+    {
+        manager.SetSinnerSelected(sinner, !manager.IsSinnerSelected(sinner));
+        RenderSettings();
+    }
+
+    private void RenderSettings()
+    {
+        for (int i = 0; i < categories.Length; i++) categories[i].SetSelected(i == selectedCategory);
+        drawPage.gameObject.SetActive(selectedCategory == 0);
+        identityPage.gameObject.SetActive(selectedCategory == 1);
+        displayPage.gameObject.SetActive(selectedCategory == 2);
+        for (int i = 0; i < sinnerSelections.Length; i++)
+            sinnerSelections[i].SetSelected(manager.IsSinnerSelected(RouletteManager.SinnerOrder[i]));
+        sinnerChoices[0].SetSelected(manager.AllowSinnerDuplicates);
+        sinnerChoices[1].SetSelected(!manager.AllowSinnerDuplicates);
+        identityChoices[0].SetSelected(manager.AllowIdentityDuplicates);
+        identityChoices[1].SetSelected(!manager.AllowIdentityDuplicates);
+        bool fullscreen = Screen.fullScreenMode != FullScreenMode.Windowed;
+        displayChoices[0].SetSelected(fullscreen);
+        displayChoices[1].SetSelected(!fullscreen);
+    }
+
+    private void SetDisplayMode(bool fullscreen)
+    {
+        DisplaySettings display = FindFirstObjectByType<DisplaySettings>();
+        if (display != null)
+        {
+            if (fullscreen) display.SetFullscreen();
+            else display.SetWindowed();
+        }
+        else
+        {
+            Screen.SetResolution(1920, 1080,
+                fullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed);
+        }
+        displayChoices[0].SetSelected(fullscreen);
+        displayChoices[1].SetSelected(!fullscreen);
+    }
+
+    private SelectionVisual OutlinedButton(string name, Transform parent, Vector2 position,
+        Vector2 size, string caption, int fontSize, UnityEngine.Events.UnityAction action)
+    {
+        RectTransform rect = Rect(name, parent, position, size);
+        Image face = rect.gameObject.AddComponent<Image>();
+        face.color = new Color(0, 0, 0, 0.01f);
+        Button button = rect.gameObject.AddComponent<Button>();
+        button.targetGraphic = face;
+        button.onClick.AddListener(action);
+        Text label = Label("Label", rect, Vector2.zero, size - new Vector2(8, 8),
+            caption, fontSize, UnselectedColor);
+        label.fontStyle = FontStyle.Bold;
+        return new SelectionVisual { Label = label, Edges = Frame(rect, size) };
+    }
+
+    private static Image[] Frame(Transform parent, Vector2 size)
+    {
+        const float border = 2f;
+        return new[]
+        {
+            Panel("Top", parent, new Vector2(0, size.y / 2 - border / 2),
+                new Vector2(size.x, border), UnselectedColor).GetComponent<Image>(),
+            Panel("Bottom", parent, new Vector2(0, -size.y / 2 + border / 2),
+                new Vector2(size.x, border), UnselectedColor).GetComponent<Image>(),
+            Panel("Left", parent, new Vector2(-size.x / 2 + border / 2, 0),
+                new Vector2(border, size.y), UnselectedColor).GetComponent<Image>(),
+            Panel("Right", parent, new Vector2(size.x / 2 - border / 2, 0),
+                new Vector2(border, size.y), UnselectedColor).GetComponent<Image>()
+        };
     }
 
     private static RectTransform Panel(string name, Transform parent, Vector2 position, Vector2 size, Color color)

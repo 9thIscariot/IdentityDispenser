@@ -4,22 +4,15 @@ public class DisplaySettings : MonoBehaviour
 {
     private const int WIDTH = 1920;
     private const int HEIGHT = 1080;
+    private const int WINDOW_WIDTH = 1920;
+    private const int WINDOW_HEIGHT = 1080;
 
-    private void Start()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    private static void UseWindowedOnStartup()
     {
-        SetResolution();
+        Screen.SetResolution(WINDOW_WIDTH, WINDOW_HEIGHT, FullScreenMode.Windowed);
     }
 
-    private void SetResolution()
-    {
-        Screen.SetResolution(
-            WIDTH,
-            HEIGHT,
-            FullScreenMode.FullScreenWindow
-        );
-    }
-
-    // 나중에 UI 버튼이나 Toggle에서 사용할 수 있음
     public void SetFullscreen()
     {
         Screen.SetResolution(
@@ -32,8 +25,8 @@ public class DisplaySettings : MonoBehaviour
     public void SetWindowed()
     {
         Screen.SetResolution(
-            WIDTH,
-            HEIGHT,
+            WINDOW_WIDTH,
+            WINDOW_HEIGHT,
             FullScreenMode.Windowed
         );
     }
