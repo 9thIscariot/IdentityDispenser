@@ -1,5 +1,6 @@
 // Unity 없이 실제 Manager/Animator의 상태 전이를 검증하는 최소 런타임 대역입니다.
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace UnityEngine
@@ -80,6 +81,32 @@ public static class ManualSpinChecks
             Check(plan.EndPosition % count == target, "Exact selected identity");
             paths++;
         }
+        var samples = new[]
+        {
+            new IdentityData("a-1", "A", "첫째"),
+            new IdentityData("a-2", "A", "둘째"),
+            new IdentityData("b-1", "B", "셋째"),
+            new IdentityData("c-1", "C", "넷째")
+        };
+        var sequence = new List<IdentityData>();
+        var sampleReel = new RouletteAnimatior();
+        int completed = 0;
+        sampleReel.Play(samples, 1, 1, 4,
+            (current, next, fraction) =>
+            {
+                if (sequence.Count == 0 || sequence[sequence.Count - 1] != current)
+                    sequence.Add(current);
+            },
+            () => completed++, null);
+        Tick(sampleReel, 180, 1f / 60);
+        sampleReel.RequestStop();
+        Tick(sampleReel, 600, 1f / 60);
+        Check(completed == 1 && sequence[sequence.Count - 1] == samples[1],
+            "Randomized reel lands on predetermined identity");
+        Check(sequence.Count > 15, "Reel continues to generate identities across cycles");
+        for (int i = 1; i < sequence.Count - 1; i++)
+            Check(sequence[i].SinnerName != sequence[i - 1].SinnerName,
+                "Reel does not group available sinners in database order");
         var manager = new RouletteManager();
         typeof(RouletteManager).GetField("portraitsOnly", Private).SetValue(manager, false);
         typeof(RouletteManager).GetMethod("Awake", Private).Invoke(manager, null);
