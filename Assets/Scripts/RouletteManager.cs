@@ -66,20 +66,19 @@ public sealed class RouletteManager : MonoBehaviour
         if (view == null) view = gameObject.AddComponent<RoulletteUI>();
         view.Initialize(this);
         view.ShowIdle();
-        Refresh("버튼을 눌러 인격을 뽑으세요.");
+        Refresh("버튼을 눌러 인격 추출");
     }
 
     public void Spin()
     {
         if (!isActiveAndEnabled || IsSpinning || RemainingCount == 0) return;
-        // 결과는 버튼을 누른 순간 균등 확률로 확정합니다. 연출에서는 다시 추첨하지 않습니다.
         var candidates = remaining.ToArray();
         int targetIndex = UnityEngine.Random.Range(0, candidates.Length);
         IdentityData result = candidates[targetIndex];
         IsSpinning = true;
         IsStopping = false;
         reel.enabled = true;
-        Refresh("뽑기 중…");
+        Refresh("추출 중");
         reel.Play(candidates, targetIndex, Mathf.Max(0.05f, cycleSeconds),
             Mathf.Max(0.1f, brakeSeconds),
             view.RenderReel,
@@ -92,7 +91,7 @@ public sealed class RouletteManager : MonoBehaviour
         if (!IsSpinning || IsStopping) return;
         IsStopping = true;
         reel.RequestStop();
-        Refresh("뽑기 중…");
+        Refresh("추출 중");
     }
 
     private void CompleteSpin(IdentityData result)
@@ -104,7 +103,7 @@ public sealed class RouletteManager : MonoBehaviour
         IsSpinning = false;
         IsStopping = false;
         view.ShowResult(result);
-        Refresh(RemainingCount == 0 ? "모든 인격을 뽑았습니다. 초기화하면 다시 시작합니다." : "뽑기 완료 · 뽑힌 인격은 다음 뽑기에서 제외됩니다.");
+        Refresh(RemainingCount == 0 ? "모든 인격을 추출했습니다. 초기화하면 다시 시작합니다." : "추출 완료 · 추출된 인격은 다음 뽑기에서 제외됩니다.");
         ResultRevealed?.Invoke(result);
     }
 
@@ -114,7 +113,7 @@ public sealed class RouletteManager : MonoBehaviour
         RestorePool();
         LastResult = null;
         view.ShowIdle();
-        Refresh("전체 인격을 다시 추첨할 수 있습니다.");
+        Refresh("전체 인격을 다시 추출할 수 있습니다.");
     }
 
     public void SetSinnerDuplicates(bool allowed)

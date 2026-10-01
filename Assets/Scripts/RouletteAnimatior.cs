@@ -1,8 +1,7 @@
+using UnityEngine;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 
-// 기존 파일 이름을 유지합니다.
 public sealed class RouletteAnimatior : MonoBehaviour
 {
     private ReelSpinPlan plan;

@@ -3,16 +3,13 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
-/// <summary>자판기 화면에는 이미지만 회전하고, 결과 이름은 하단 명판에 표시합니다.</summary>
 public sealed class RoulletteUI : MonoBehaviour
 {
     [SerializeField] private Font font;
     [SerializeField] private Texture2D machineBackground;
     [SerializeField] private Texture2D buttonNormal;
     [SerializeField] private Texture2D buttonPressed;
-    // 현재 배경 PNG(1920×1080)의 픽셀 좌표를 기준으로 배치합니다.
     private const float DesignWidth = 1920, DesignHeight = 1080;
-    // 투명 스크린보다 크게 깔아 프레임 가장자리까지 빈틈없이 채웁니다.
     private const float ScreenWidth = 1040, CellHeight = 520;
     private RectTransform currentRow, nextRow;
     private RawImage currentPortrait, nextPortrait;
@@ -58,7 +55,6 @@ public sealed class RoulletteUI : MonoBehaviour
         var scaler = canvasObject.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(DesignWidth, DesignHeight);
-        // 화면 비율이 달라도 자판기 전체와 버튼이 화면 안에 들어옵니다.
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
         RectTransform root = canvasObject.GetComponent<RectTransform>();
         RectTransform letterbox = Panel("Letterbox", root, Vector2.zero, Vector2.zero, Color.black);
@@ -71,7 +67,6 @@ public sealed class RoulletteUI : MonoBehaviour
         background.raycastTarget = false;
         background.color = machineBackground != null ? Color.white : new Color(0.12f, 0.12f, 0.12f);
 
-        // 이미지를 뒤에서 회전시키고, 앞쪽 PNG의 알파가 실제 화면 윤곽을 만듭니다.
         RectTransform viewport = Rect("Screen", machine, At(960, 400), new Vector2(ScreenWidth, CellHeight));
         viewport.gameObject.AddComponent<RectMask2D>();
         currentRow = Rect("CurrentIdentity", viewport, Vector2.zero, new Vector2(ScreenWidth, CellHeight));
@@ -80,7 +75,6 @@ public sealed class RoulletteUI : MonoBehaviour
         nextPortrait = MakePortrait(nextRow);
         background.transform.SetAsLastSibling();
 
-        // 자판기 이미지 자체의 패널 질감을 살리고, 왼쪽 패널은 설정 버튼으로 사용합니다.
         Text settingsLabel = Label("Settings", machine, At(514, 754), new Vector2(148, 122),
             "설정", 24, Color.black);
         settingsLabel.fontStyle = FontStyle.Bold;
@@ -132,7 +126,6 @@ public sealed class RoulletteUI : MonoBehaviour
     public void ShowIdle()
     {
         resultName.text = "";
-        // 이미지를 숨기면 뒤쪽의 검은 배경이 보여 꺼진 화면처럼 보입니다.
         currentPortrait.enabled = nextPortrait.enabled = false;
         currentRow.anchoredPosition = Vector2.zero;
         nextRow.anchoredPosition = new Vector2(0, -CellHeight);
@@ -156,17 +149,13 @@ public sealed class RoulletteUI : MonoBehaviour
         if (portrait.texture == texture) return;
         portrait.texture = texture;
         if (texture == null) return;
-        // 카드 형태의 세로 이미지는 얼굴과 카드 전체가 보이도록 축소해 표시합니다.
         if (texture.width < texture.height)
         {
-            // 회전 영역은 프레임 뒤까지 확장되어 있으므로, 카드는 실제 창 안쪽 높이에 맞춥니다.
             float fit = Mathf.Min(ScreenWidth / texture.width, 450f / texture.height);
             portrait.rectTransform.sizeDelta = new Vector2(texture.width * fit, texture.height * fit);
             portrait.uvRect = new UnityEngine.Rect(0, 0, 1, 1);
             return;
         }
-        // 비율을 유지하며 화면을 채우고, 넘치는 부분은 중앙 기준으로 잘라냅니다.
-        // UV로 자르면 회전 중에도 다음 인격의 칸을 침범하지 않습니다.
         float scale = Mathf.Max(ScreenWidth / texture.width, CellHeight / texture.height);
         float visibleWidth = ScreenWidth / (texture.width * scale);
         float visibleHeight = CellHeight / (texture.height * scale);
@@ -186,7 +175,6 @@ public sealed class RoulletteUI : MonoBehaviour
 
     private Button MakeButton(string name, Transform parent, Vector2 position, string title)
     {
-        // PNG의 투명 여백을 포함한 크기입니다. 실제 버튼은 약 134×116입니다.
         RectTransform rect = Rect(name, parent, position, new Vector2(190, 190));
         var face = rect.gameObject.AddComponent<RawImage>();
         face.texture = buttonNormal;
@@ -214,7 +202,6 @@ public sealed class RoulletteUI : MonoBehaviour
 
     private void BuildSettingsScreen(RectTransform viewport)
     {
-        // 화면 위에 불투명한 검은 면을 두되 자판기 PNG 프레임의 뒤쪽에 배치합니다.
         settingsPanel = Panel("SettingsScreen", viewport, Vector2.zero,
             new Vector2(ScreenWidth, CellHeight), Color.black);
         categories = new[]

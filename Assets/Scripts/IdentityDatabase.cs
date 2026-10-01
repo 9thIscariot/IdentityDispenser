@@ -1,12 +1,6 @@
 using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// 사용자가 제공한 이미지 기준 12명, 189개 인격의 원본 목록입니다.
-/// 이미지의 줄바꿈은 공백으로 정리했습니다. 등급 및 가중치는 사용하지 않습니다.
-/// ID는 게임 내부 ID가 아닌 이 프로젝트의 고정 ID입니다.
-/// 항목을 추가하거나 순서를 바꾸더라도 기존 ID를 변경하거나 재사용하지 마세요.
-/// </summary>
 public sealed class IdentityDatabase
 {
     public static IdentityDatabase Default { get; } = new IdentityDatabase();

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>자판기의 둥근 화면 마스크와 원형 버튼을 위한 UI 도형입니다.</summary>
 [RequireComponent(typeof(CanvasRenderer))]
 public sealed class MachineShapeGraphic : MaskableGraphic, ICanvasRaycastFilter
 {

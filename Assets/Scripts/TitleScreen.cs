@@ -4,7 +4,6 @@ using UnityEngine.InputSystem.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-/// <summary>골목의 자판기에서 룰렛으로 진입하는 타이틀 화면입니다.</summary>
 public sealed class TitleScreen : MonoBehaviour
 {
     [SerializeField] private Texture2D alleyBackground;
