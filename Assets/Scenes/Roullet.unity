@@ -393,6 +393,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
+      propertyPath: portraits.Array.size
+      value: 190
+      objectReference: {fileID: 0}
+    - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[0].texture
       value: 
       objectReference: {fileID: 2800000, guid: d0b5964079665044996eb4a8abcdbc8f, type: 3}
@@ -1027,125 +1031,129 @@ PrefabInstance:
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[158].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 0d57b4172d2202d4d8cf24a2536c56b3, type: 3}
+      objectReference: {fileID: 2800000, guid: 339c5663896e49648bcd7c72d1f09519, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[159].texture
       value: 
-      objectReference: {fileID: 2800000, guid: b458a9081ed9a7444a46a82a8bf04c1b, type: 3}
+      objectReference: {fileID: 2800000, guid: 0d57b4172d2202d4d8cf24a2536c56b3, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[160].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 063848a7622d78d489b8a3ace60a53a3, type: 3}
+      objectReference: {fileID: 2800000, guid: b458a9081ed9a7444a46a82a8bf04c1b, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[161].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 08f82ae2dcbb7a947b1e8c7539346bb9, type: 3}
+      objectReference: {fileID: 2800000, guid: 063848a7622d78d489b8a3ace60a53a3, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[162].texture
       value: 
-      objectReference: {fileID: 2800000, guid: b5584a7fa3bb47f4f83ab5c76f0ea0e9, type: 3}
+      objectReference: {fileID: 2800000, guid: 08f82ae2dcbb7a947b1e8c7539346bb9, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[163].texture
       value: 
-      objectReference: {fileID: 2800000, guid: b1eb6b80a15f4be428eb58f90239c2a5, type: 3}
+      objectReference: {fileID: 2800000, guid: b5584a7fa3bb47f4f83ab5c76f0ea0e9, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[164].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 13dc378b6a0795f4c8438dc293104d5c, type: 3}
+      objectReference: {fileID: 2800000, guid: b1eb6b80a15f4be428eb58f90239c2a5, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[165].texture
       value: 
-      objectReference: {fileID: 2800000, guid: b1f1614e79df30b479f1e22fcc011867, type: 3}
+      objectReference: {fileID: 2800000, guid: 13dc378b6a0795f4c8438dc293104d5c, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[166].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 87984b3d3e826be4ebef06aecce9cb70, type: 3}
+      objectReference: {fileID: 2800000, guid: b1f1614e79df30b479f1e22fcc011867, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[167].texture
       value: 
-      objectReference: {fileID: 2800000, guid: d45447caf95028f47861f48ff8156928, type: 3}
+      objectReference: {fileID: 2800000, guid: 87984b3d3e826be4ebef06aecce9cb70, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[168].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 17bf61b48b7294442adcebdf6c455613, type: 3}
+      objectReference: {fileID: 2800000, guid: d45447caf95028f47861f48ff8156928, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[169].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 21a0e0e6d7c6c924bb681c180c73cdbf, type: 3}
+      objectReference: {fileID: 2800000, guid: 17bf61b48b7294442adcebdf6c455613, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[170].texture
       value: 
-      objectReference: {fileID: 2800000, guid: aa09688dbc27d6e4dbf44e4ef8cf5a08, type: 3}
+      objectReference: {fileID: 2800000, guid: 21a0e0e6d7c6c924bb681c180c73cdbf, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[171].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 7c8c78ce59de03a4a88ba02609dc99f8, type: 3}
+      objectReference: {fileID: 2800000, guid: aa09688dbc27d6e4dbf44e4ef8cf5a08, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[172].texture
       value: 
-      objectReference: {fileID: 2800000, guid: a60f7c5be32fb6f4faef011eab0f9ba3, type: 3}
+      objectReference: {fileID: 2800000, guid: 7c8c78ce59de03a4a88ba02609dc99f8, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[173].texture
       value: 
-      objectReference: {fileID: 2800000, guid: edadf449068f76f4382a89f45c415b9c, type: 3}
+      objectReference: {fileID: 2800000, guid: a60f7c5be32fb6f4faef011eab0f9ba3, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[174].texture
       value: 
-      objectReference: {fileID: 2800000, guid: de29e0f928beca64e9c25d4cf3a9478a, type: 3}
+      objectReference: {fileID: 2800000, guid: edadf449068f76f4382a89f45c415b9c, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[175].texture
       value: 
-      objectReference: {fileID: 2800000, guid: c47bf3997f5cd4e49b6223dad5d3a3ef, type: 3}
+      objectReference: {fileID: 2800000, guid: de29e0f928beca64e9c25d4cf3a9478a, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[176].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 1aca426b3cb8061498a78b0a470f7f5e, type: 3}
+      objectReference: {fileID: 2800000, guid: c47bf3997f5cd4e49b6223dad5d3a3ef, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[177].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 338ae17d1f83b5d4ca80cf07ae944915, type: 3}
+      objectReference: {fileID: 2800000, guid: 1aca426b3cb8061498a78b0a470f7f5e, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[178].texture
       value: 
-      objectReference: {fileID: 2800000, guid: a10b6557dad9517438a14490d9f05123, type: 3}
+      objectReference: {fileID: 2800000, guid: 338ae17d1f83b5d4ca80cf07ae944915, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[179].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 1be8b03042422fe498bc35206bf19e69, type: 3}
+      objectReference: {fileID: 2800000, guid: a10b6557dad9517438a14490d9f05123, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[180].texture
       value: 
-      objectReference: {fileID: 2800000, guid: a6bfd097f5e719c488db2dbf12e3bb8c, type: 3}
+      objectReference: {fileID: 2800000, guid: 1be8b03042422fe498bc35206bf19e69, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[181].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 7c2cae0a4dc7af04dada0c1cfd44b9bc, type: 3}
+      objectReference: {fileID: 2800000, guid: a6bfd097f5e719c488db2dbf12e3bb8c, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[182].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 7275d0c243eed0c4688f2a96d5084ab3, type: 3}
+      objectReference: {fileID: 2800000, guid: 7c2cae0a4dc7af04dada0c1cfd44b9bc, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[183].texture
       value: 
-      objectReference: {fileID: 2800000, guid: b90eb750d751439489d9aea4ab160ad8, type: 3}
+      objectReference: {fileID: 2800000, guid: 7275d0c243eed0c4688f2a96d5084ab3, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[184].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 6625ce42ce1185d4b81148321cd558a3, type: 3}
+      objectReference: {fileID: 2800000, guid: b90eb750d751439489d9aea4ab160ad8, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[185].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 9752f0fb7b7c7b74488f072aadc8d7bd, type: 3}
+      objectReference: {fileID: 2800000, guid: 6625ce42ce1185d4b81148321cd558a3, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[186].texture
       value: 
-      objectReference: {fileID: 2800000, guid: c643de68348c43948bbb22eb711a43eb, type: 3}
+      objectReference: {fileID: 2800000, guid: 9752f0fb7b7c7b74488f072aadc8d7bd, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[187].texture
       value: 
-      objectReference: {fileID: 2800000, guid: 0ce930c40d5379b45afd4391918a2481, type: 3}
+      objectReference: {fileID: 2800000, guid: c643de68348c43948bbb22eb711a43eb, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[188].texture
+      value: 
+      objectReference: {fileID: 2800000, guid: 0ce930c40d5379b45afd4391918a2481, type: 3}
+    - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
+      propertyPath: portraits.Array.data[190].texture
       value: 
       objectReference: {fileID: 2800000, guid: 9431d3307dddb0e4db0ff0cd5db6351f, type: 3}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
@@ -1782,126 +1790,130 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[158].identityId
-      value: outis-001
+      value: sinclair-016
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[159].identityId
-      value: outis-002
+      value: outis-001
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[160].identityId
-      value: outis-003
+      value: outis-002
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[161].identityId
-      value: outis-004
+      value: outis-003
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[162].identityId
-      value: outis-005
+      value: outis-004
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[163].identityId
-      value: outis-006
+      value: outis-005
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[164].identityId
-      value: outis-007
+      value: outis-006
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[165].identityId
-      value: outis-008
+      value: outis-007
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[166].identityId
-      value: outis-009
+      value: outis-008
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[167].identityId
-      value: outis-010
+      value: outis-009
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[168].identityId
-      value: outis-011
+      value: outis-010
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[169].identityId
-      value: outis-012
+      value: outis-011
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[170].identityId
-      value: outis-013
+      value: outis-012
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[171].identityId
-      value: outis-014
+      value: outis-013
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[172].identityId
-      value: outis-015
+      value: outis-014
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[173].identityId
-      value: gregor-001
+      value: outis-015
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[174].identityId
-      value: gregor-002
+      value: gregor-001
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[175].identityId
-      value: gregor-003
+      value: gregor-002
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[176].identityId
-      value: gregor-004
+      value: gregor-003
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[177].identityId
-      value: gregor-005
+      value: gregor-004
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[178].identityId
-      value: gregor-006
+      value: gregor-005
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[179].identityId
-      value: gregor-007
+      value: gregor-006
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[180].identityId
-      value: gregor-008
+      value: gregor-007
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[181].identityId
-      value: gregor-009
+      value: gregor-008
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[182].identityId
-      value: gregor-010
+      value: gregor-009
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[183].identityId
-      value: gregor-011
+      value: gregor-010
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[184].identityId
-      value: gregor-012
+      value: gregor-011
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[185].identityId
-      value: gregor-013
+      value: gregor-012
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[186].identityId
-      value: gregor-014
+      value: gregor-013
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[187].identityId
-      value: gregor-015
+      value: gregor-014
       objectReference: {fileID: 0}
     - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
       propertyPath: portraits.Array.data[188].identityId
+      value: gregor-015
+      objectReference: {fileID: 0}
+    - target: {fileID: 902100003, guid: 895a7eed5a7742c6b077784dc355b362, type: 3}
+      propertyPath: portraits.Array.data[190].identityId
       value: gregor-016
       objectReference: {fileID: 0}
     m_RemovedComponents: []

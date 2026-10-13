@@ -184,6 +184,7 @@ public sealed class IdentityDatabase
         new IdentityData("sinclair-013", "싱클레어", "동부 엄지 솔다토 II"),
         new IdentityData("sinclair-014", "싱클레어", "흑수 - 유"),
         new IdentityData("sinclair-015", "싱클레어", "거미집 소지 제자"),
+        new IdentityData("sinclair-016", "싱클레어", "오트쿠튀르::르루주 붉은 신"),
 
         // 오티스
         new IdentityData("outis-001", "오티스", "LCB 수감자"),

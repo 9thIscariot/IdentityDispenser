@@ -1,6 +1,8 @@
 # Random_Limbus_Identity
 림버스 컴퍼니 인격 랜덤 가챠 프로그램
 
+Windows 자동 업데이트용 빌드 및 GitHub Release 배포 방법: [자동 업데이트 안내](AUTO_UPDATE.md)
+
 Copyright Notice
 
 본 프로젝트는 비공식 팬 프로젝트입니다.

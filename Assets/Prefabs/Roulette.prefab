@@ -367,6 +367,8 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: 888f6e0315a04694db962b21b9a6de32, type: 3}
   - identityId: sinclair-015
     texture: {fileID: 2800000, guid: 01d3713ba314ae64bb80b29122a49266, type: 3}
+  - identityId: sinclair-016
+    texture: {fileID: 2800000, guid: 339c5663896e49648bcd7c72d1f09519, type: 3}
   - identityId: outis-001
     texture: {fileID: 2800000, guid: 0d57b4172d2202d4d8cf24a2536c56b3, type: 3}
   - identityId: outis-002
