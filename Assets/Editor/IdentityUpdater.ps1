@@ -1,4 +1,4 @@
-# Copied to an isolated temporary directory before launch. Compatible with Windows PowerShell 5.1.
+﻿# Copied to an isolated temporary directory before launch. Compatible with Windows PowerShell 5.1.
 param([switch] $NoDialog)
 $ErrorActionPreference = 'Stop'
 Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -8,6 +8,20 @@ $committed = $false
 $changed = [System.Collections.Generic.List[string]]::new()
 $backedUp = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
 $guard = $null
+$progressClock = [Diagnostics.Stopwatch]::StartNew()
+$lastProgress = -1000
+function Write-ProgressFile([string] $Message, [switch] $Force) {
+    if ($Force -or $progressClock.ElapsedMilliseconds - $script:lastProgress -ge 500) {
+        # Both sides permit concurrent access; a status read must never abort installation.
+        $stream = [IO.FileStream]::new((Join-Path $PSScriptRoot 'progress.txt'), [IO.FileMode]::Create,
+            [IO.FileAccess]::Write, [IO.FileShare]::ReadWrite)
+        try {
+            $bytes = [Text.Encoding]::UTF8.GetBytes($Message)
+            $stream.Write($bytes, 0, $bytes.Length)
+        } finally { $stream.Dispose() }
+        $script:lastProgress = $progressClock.ElapsedMilliseconds
+    }
+}
 
 function Safe-Path([string] $Root, [string] $Relative) {
     if ([string]::IsNullOrWhiteSpace($Relative) -or [IO.Path]::IsPathRooted($Relative) -or
@@ -23,8 +37,8 @@ function Safe-Path([string] $Root, [string] $Relative) {
     # Never follow junctions or symlinks in an existing installation.
     $cursor = $result
     while ($cursor -and $cursor.Length -ge $prefix.TrimEnd('\').Length) {
-        if (Test-Path -LiteralPath $cursor) {
-            if ((Get-Item -LiteralPath $cursor -Force).Attributes -band [IO.FileAttributes]::ReparsePoint) {
+        if ([IO.File]::Exists($cursor) -or [IO.Directory]::Exists($cursor)) {
+            if ([IO.File]::GetAttributes($cursor) -band [IO.FileAttributes]::ReparsePoint) {
                 throw "Reparse point is not supported: $cursor"
             }
         }
@@ -53,6 +67,7 @@ try {
     $install = [IO.Path]::GetFullPath($job.installDirectory)
     $exe = Safe-Path $install $job.executable
     if ([IO.Path]::GetFileName($exe) -ne $job.executable) { throw 'Invalid executable name.' }
+    Write-ProgressFile '다운로드 파일 검증 중…' -Force
     if ((Get-FileHash -LiteralPath $job.archive -Algorithm SHA256).Hash -ne $job.digest) { throw 'ZIP checksum mismatch.' }
     $stage = Join-Path $PSScriptRoot 'stage'
     $backup = Join-Path $PSScriptRoot 'backup'
@@ -60,7 +75,10 @@ try {
     $zip = [IO.Compression.ZipFile]::OpenRead($job.archive)
     try {
         $entries = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+        $entryIndex = 0
         foreach ($entry in $zip.Entries) {
+            $entryIndex++
+            Write-ProgressFile ("압축 해제 중… {0}/{1}" -f $entryIndex, $zip.Entries.Count)
             $relative = $entry.FullName.TrimEnd('/', '\')
             if (!$relative) { continue }
             $target = Safe-Path $stage $relative
@@ -71,6 +89,7 @@ try {
             [IO.Compression.ZipFileExtensions]::ExtractToFile($entry, $target, $false)
         }
     } finally { $zip.Dispose() }
+    Write-ProgressFile '설치 파일 목록 확인 중…' -Force
     # Accept either build contents at ZIP root or exactly one wrapping folder.
     $manifests = @(Get-ChildItem -LiteralPath $stage -Filter 'identity-update.json' -Recurse -File)
     if ($manifests.Count -ne 1) { throw 'Expected one build manifest in ZIP.' }
@@ -88,7 +107,10 @@ try {
         throw 'Package manifest does not match ZIP contents.'
     }
     $affected = [System.Collections.Generic.HashSet[string]]::new([StringComparer]::OrdinalIgnoreCase)
+    $fileIndex = 0
     foreach ($relative in $next.files) {
+        $fileIndex++
+        Write-ProgressFile ("설치 파일 확인 중… {0}/{1}" -f $fileIndex, $next.files.Count)
         $from = Safe-Path $source $relative
         if (!(Test-Path -LiteralPath $from -PathType Leaf)) { throw "Package file missing: $relative" }
         $null = Safe-Path $install $relative

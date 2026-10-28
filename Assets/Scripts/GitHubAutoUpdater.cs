@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.IO;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -34,6 +33,7 @@ public sealed class GitHubAutoUpdater : MonoBehaviour
     private FileStream updateLock;
     private string work;
     private bool handedOff;
+    private bool failed;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void Initialize()
@@ -58,7 +58,14 @@ public sealed class GitHubAutoUpdater : MonoBehaviour
             catch (Exception ex) { failure = ex; }
             if (failure != null)
             {
-                Debug.LogWarning("Automatic update skipped: " + failure.Message);
+                failed = true;
+                if (work != null)
+                {
+                    try { File.WriteAllText(Path.Combine(work, "startup-error.txt"), failure.ToString()); }
+                    catch (IOException) { }
+                    catch (UnauthorizedAccessException) { }
+                }
+                Debug.LogWarning("Automatic update skipped: " + failure + (work == null ? "" : "\nUpdate details: " + work));
                 if (status != null) status.text = "업데이트하지 못했습니다. 기존 버전으로 실행합니다.";
                 yield return new WaitForSecondsRealtime(2);
                 break;
@@ -120,15 +127,7 @@ public sealed class GitHubAutoUpdater : MonoBehaviour
         }
         if (new FileInfo(archive).Length != asset.size) throw new IOException("Incomplete update download.");
         status.text = "업데이트 파일 확인 중…";
-        var hashTask = Task.Run(() =>
-        {
-            using (var sha = System.Security.Cryptography.SHA256.Create())
-            using (var input = File.OpenRead(archive))
-                return BitConverter.ToString(sha.ComputeHash(input)).Replace("-", "").ToLowerInvariant();
-        });
-        while (!hashTask.IsCompleted) yield return null;
-        if (!string.Equals("sha256:" + hashTask.GetAwaiter().GetResult(), asset.digest, StringComparison.OrdinalIgnoreCase))
-            throw new IOException("Update checksum mismatch.");
+        // The helper verifies SHA-256 before extraction; avoid reading the entire ZIP twice.
 
         File.Copy(Path.Combine(directory, "IdentityUpdater.ps1"), Path.Combine(work, "IdentityUpdater.ps1"));
         File.WriteAllText(Path.Combine(work, "job.json"), JsonUtility.ToJson(new Job
@@ -147,12 +146,33 @@ public sealed class GitHubAutoUpdater : MonoBehaviour
             WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden
         }))
         {
-            float deadline = Time.realtimeSinceStartup + 180;
+            // Allow large packages on slow disks; timeout measures inactivity, not total work.
+            string progressPath = Path.Combine(work, "progress.txt");
+            DateTime lastProgress = DateTime.MinValue;
+            float nextProgressCheck = 0;
+            float deadline = Time.realtimeSinceStartup + 900;
             while (!File.Exists(Path.Combine(work, "ready")))
             {
                 if (File.Exists(Path.Combine(work, "error.txt")))
                     throw new IOException(File.ReadAllText(Path.Combine(work, "error.txt")));
                 if (helper == null || helper.HasExited) throw new IOException("Updater stopped before preparation completed.");
+                if (Time.realtimeSinceStartup >= nextProgressCheck && File.Exists(progressPath))
+                {
+                    nextProgressCheck = Time.realtimeSinceStartup + 0.25f;
+                    DateTime written = File.GetLastWriteTimeUtc(progressPath);
+                    if (written != lastProgress)
+                    {
+                        lastProgress = written;
+                        deadline = Time.realtimeSinceStartup + 900;
+                        try
+                        {
+                            using (var input = new FileStream(progressPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                            using (var reader = new StreamReader(input))
+                                status.text = "업데이트 준비 중…\n" + reader.ReadToEnd();
+                        }
+                        catch (IOException) { } // Helper may be writing the status file.
+                    }
+                }
                 if (Time.realtimeSinceStartup > deadline)
                 {
                     helper.Kill(); helper.WaitForExit();
@@ -198,7 +218,7 @@ public sealed class GitHubAutoUpdater : MonoBehaviour
         updateLock?.Dispose(); updateLock = null;
         if (overlay != null) Destroy(overlay);
         if (font != null) Destroy(font);
-        if (work != null && Directory.Exists(work))
+        if (!failed && work != null && Directory.Exists(work))
         {
             // Work is always a freshly generated child of the OS temporary directory.
             try { Directory.Delete(work, true); } catch (IOException) { }

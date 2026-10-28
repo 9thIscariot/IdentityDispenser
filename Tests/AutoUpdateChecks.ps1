@@ -33,7 +33,7 @@ Assert (![ReleaseVersion]::TryParse('LimbusCompany', 2026, [ref]$v)) 'Legacy tag
 Assert (![ReleaseVersion]::TryParse('1015ver', 0, [ref]$v)) 'Build version missing year accepted'
 Write-Output 'PASS: date version parsing'
 
-foreach ($scenario in @('success', 'wrapped', 'bad-hash', 'bad-version', 'traversal', 'locked-file')) {
+foreach ($scenario in @('success', 'wrapped', 'bad-hash', 'bad-version', 'traversal', 'missing-file', 'locked-file')) {
     $root = Join-Path $testRoot $scenario
     $install = Join-Path $root 'installation space 한글'
     $payload = Join-Path $root 'payload'
@@ -60,6 +60,7 @@ foreach ($scenario in @('success', 'wrapped', 'bad-hash', 'bad-version', 'traver
         @{ schema = 1; version = $version; executable = 'TestDispenser.exe'; files = @($files | Sort-Object) } |
             ConvertTo-Json -Depth 4 | Set-Content -LiteralPath (Join-Path $directory 'identity-update.json') -Encoding UTF8
     }
+    if ($scenario -eq 'missing-file') { Remove-Item -LiteralPath (Join-Path $payload 'a.txt') }
     [IO.File]::WriteAllText((Join-Path $install 'personal.txt'), 'keep')
     $archive = Join-Path $work 'update.zip'
     [IO.Compression.ZipFile]::CreateFromDirectory($payload, $archive, [IO.Compression.CompressionLevel]::Optimal, ($scenario -eq 'wrapped'))
@@ -90,6 +91,7 @@ foreach ($scenario in @('success', 'wrapped', 'bad-hash', 'bad-version', 'traver
         }
         [IO.File]::WriteAllText($gate, 'exit')
         Assert ($helper.WaitForExit(15000)) 'Updater exit timeout'
+        Assert (Test-Path -LiteralPath (Join-Path $work 'progress.txt')) 'Preparation progress was not reported'
         $errorPath = Join-Path $work 'error.txt'
         if ($scenario -in @('success', 'wrapped')) {
             if (Test-Path -LiteralPath $errorPath) { throw (Get-Content -LiteralPath $errorPath -Raw) }

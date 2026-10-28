@@ -59,3 +59,12 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File Tests/AutoUpdateChecks.p
 실제 업데이트 도우미를 임시 앱에 적용하여 버전 파싱, 일반/폴더 포함 ZIP,
 잘못된 해시/버전/압축 경로 거부, 잠긴 파일 교체 실패 시 복구를 확인합니다.
 임시 파일은 Git에서 제외되는 `Temp/AutoUpdateChecks`에 생성됩니다.
+
+## 대용량 업데이트 준비
+
+다운로드한 ZIP의 SHA-256은 설치 도우미가 압축 해제 전에 한 번 검증합니다.
+준비 화면에는 검증·압축 해제·설치 파일 확인 단계가 표시됩니다.
+준비에 3분 이상 걸려도 작업이 진행 중이면 계속 기다리며,
+진행 기록이 15분 동안 바뀌지 않을 때 준비 시간 초과로 처리합니다.
+실패 시 임시 폴더의 `error.txt`(도우미) 또는 `startup-error.txt`(앱)로 원인을 확인할 수 있습니다.
+수정된 동작은 새 Windows 빌드를 배포한 뒤 적용됩니다.
