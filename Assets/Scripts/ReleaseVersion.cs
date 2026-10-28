@@ -4,7 +4,6 @@ using System.Text.RegularExpressions;
 
 public static class ReleaseVersion
 {
-    // Canonical build version: yyyyMMdd[.revision]. Release tags also accept 1015ver.
     public static bool TryParse(string value, int year, out long number)
     {
         number = 0;
