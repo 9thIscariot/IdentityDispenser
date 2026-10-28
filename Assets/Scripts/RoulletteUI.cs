@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
@@ -13,10 +13,18 @@ public sealed class RoulletteUI : MonoBehaviour
     private const float ScreenWidth = 1040, CellHeight = 520;
     private RectTransform currentRow, nextRow;
     private RawImage currentPortrait, nextPortrait;
-    private Text resultName, status;
+    private Text resultName;
     private Button spinButton, stopButton;
     private RectTransform settingsPanel, drawPage, identityPage, displayPage;
-    private Button settingsButton;
+    private Button settingsButton, historyButton;
+    private RectTransform historyPanel;
+    private readonly RectTransform[] historyRows = new RectTransform[RouletteManager.HistoryPageSize];
+    private readonly Text[] historyNumbers = new Text[RouletteManager.HistoryPageSize];
+    private readonly Text[] historyNames = new Text[RouletteManager.HistoryPageSize];
+    private readonly RawImage[] historyPortraits = new RawImage[RouletteManager.HistoryPageSize];
+    private Text historyEmpty, historyPageLabel;
+    private SelectionVisual historyPrevious, historyNext;
+    private int historyPage;
     private SelectionVisual[] categories, sinnerChoices, identityChoices, displayChoices;
     private SelectionVisual[] sinnerSelections;
     private int selectedCategory;
@@ -27,6 +35,15 @@ public sealed class RoulletteUI : MonoBehaviour
     {
         public Text Label;
         public Image[] Edges;
+        public Button Button;
+
+        public void SetInteractable(bool value)
+        {
+            Button.interactable = value;
+            Color color = value ? UnselectedColor : new Color(0.32f, 0.12f, 0.12f);
+            Label.color = color;
+            foreach (Image edge in Edges) edge.color = color;
+        }
 
         public void SetSelected(bool selected)
         {
@@ -82,8 +99,12 @@ public sealed class RoulletteUI : MonoBehaviour
         settingsButton = settingsLabel.gameObject.AddComponent<Button>();
         settingsButton.targetGraphic = settingsLabel;
         settingsButton.onClick.AddListener(ToggleSettings);
-        status = Label("Status", machine, At(1410, 757), new Vector2(148, 122), "대기", 24, Color.black);
-        status.fontStyle = FontStyle.Bold;
+        Text historyLabel = Label("History", machine, At(1410, 757), new Vector2(148, 122), "기록", 24, Color.black);
+        historyLabel.fontStyle = FontStyle.Bold;
+        historyLabel.raycastTarget = true;
+        historyButton = historyLabel.gameObject.AddComponent<Button>();
+        historyButton.targetGraphic = historyLabel;
+        historyButton.onClick.AddListener(ToggleHistory);
 
         spinButton = MakeButton("Spin", machine, At(744, 751), "뽑기");
         stopButton = MakeButton("Stop", machine, At(959, 751), "정지");
@@ -100,6 +121,7 @@ public sealed class RoulletteUI : MonoBehaviour
         resultName.resizeTextMaxSize = 24;
 
         BuildSettingsScreen(viewport);
+        BuildHistoryScreen(viewport);
 
         if (FindFirstObjectByType<EventSystem>() == null)
         {
@@ -133,12 +155,13 @@ public sealed class RoulletteUI : MonoBehaviour
 
     public void Refresh(int remaining, int total, bool spinning, string message)
     {
-        status.text = spinning ? "뽑기 중" :
-            manager.LastResult != null ? "뽑기 완료" : "대기";
         spinButton.interactable = !spinning && remaining > 0 &&
-            (settingsPanel == null || !settingsPanel.gameObject.activeSelf);
+            (settingsPanel == null || !settingsPanel.gameObject.activeSelf) &&
+            (historyPanel == null || !historyPanel.gameObject.activeSelf);
         stopButton.interactable = spinning && !manager.IsStopping;
         if (settingsButton != null) settingsButton.interactable = !spinning;
+        if (historyButton != null) historyButton.interactable = !spinning;
+        if (historyPanel != null && historyPanel.gameObject.activeSelf) RenderHistory();
         if (spinning) resultName.text = "";
     }
 
@@ -195,9 +218,93 @@ public sealed class RoulletteUI : MonoBehaviour
     private void ToggleSettings()
     {
         if (manager.IsSpinning) return;
+        historyPanel.gameObject.SetActive(false);
         settingsPanel.gameObject.SetActive(!settingsPanel.gameObject.activeSelf);
         if (settingsPanel.gameObject.activeSelf) RenderSettings();
         Refresh(manager.RemainingCount, 0, manager.IsSpinning, "");
+    }
+
+    private void ToggleHistory()
+    {
+        if (manager.IsSpinning) return;
+        bool opening = !historyPanel.gameObject.activeSelf;
+        settingsPanel.gameObject.SetActive(false);
+        historyPanel.gameObject.SetActive(opening);
+        if (opening) historyPage = 0;
+        Refresh(manager.RemainingCount, 0, manager.IsSpinning, "");
+    }
+
+    private void BuildHistoryScreen(RectTransform viewport)
+    {
+        historyPanel = Panel("HistoryScreen", viewport, Vector2.zero,
+            new Vector2(ScreenWidth, CellHeight), Color.black);
+        Label("HistoryTitle", historyPanel, new Vector2(0, 190), new Vector2(560, 38),
+            "뽑기 기록", 28, SelectedColor).fontStyle = FontStyle.Bold;
+        OutlinedButton("CloseHistory", historyPanel, new Vector2(398, 190),
+            new Vector2(108, 38), "닫기", 22, ToggleHistory);
+        for (int i = 0; i < historyRows.Length; i++)
+        {
+            RectTransform row = Rect("HistoryRow" + i, historyPanel,
+                new Vector2(0, 125 - i * 78), new Vector2(920, 72));
+            historyRows[i] = row;
+            Frame(row, new Vector2(920, 72));
+            Panel("NumberDivider", row, new Vector2(-360, 0), new Vector2(2, 72), UnselectedColor);
+            historyNumbers[i] = Label("Number", row, new Vector2(-410, 0), new Vector2(90, 62),
+                "", 27, UnselectedColor);
+            Text name = Label("IdentityName", row, new Vector2(-80, 0), new Vector2(520, 60),
+                "", 25, SelectedColor);
+            name.alignment = TextAnchor.MiddleLeft;
+            name.resizeTextForBestFit = true;
+            name.resizeTextMinSize = 17;
+            name.resizeTextMaxSize = 25;
+            historyNames[i] = name;
+            RawImage portrait = Rect("Illustration", row, new Vector2(330, 0), new Vector2(220, 66))
+                .gameObject.AddComponent<RawImage>();
+            portrait.raycastTarget = false;
+            historyPortraits[i] = portrait;
+        }
+        historyEmpty = Label("EmptyHistory", historyPanel, Vector2.zero, new Vector2(840, 80),
+            "아직 뽑은 기록이 없습니다.", 27, SelectedColor);
+        historyPrevious = OutlinedButton("PreviousHistoryPage", historyPanel, new Vector2(-260, -180),
+            new Vector2(360, 50), "이전", 25, () => ChangeHistoryPage(-1));
+        historyNext = OutlinedButton("NextHistoryPage", historyPanel, new Vector2(260, -180),
+            new Vector2(360, 50), "다음", 25, () => ChangeHistoryPage(1));
+        historyPageLabel = Label("HistoryPageNumber", historyPanel, new Vector2(0, -180),
+            new Vector2(140, 46), "", 21, SelectedColor);
+        historyPanel.gameObject.SetActive(false);
+    }
+
+    private void ChangeHistoryPage(int delta)
+    {
+        historyPage = Mathf.Clamp(historyPage + delta, 0, manager.HistoryPageCount - 1);
+        RenderHistory();
+    }
+
+    private void RenderHistory()
+    {
+        historyPage = Mathf.Clamp(historyPage, 0, manager.HistoryPageCount - 1);
+        for (int i = 0; i < historyRows.Length; i++)
+        {
+            IdentityData entry = manager.GetHistoryEntry(historyPage, i, out int number);
+            historyRows[i].gameObject.SetActive(entry != null);
+            if (entry == null) continue;
+            historyNumbers[i].text = number.ToString("D3");
+            historyNames[i].text = entry.DisplayName;
+            Texture2D texture = manager.GetPortrait(entry.Id);
+            RawImage portrait = historyPortraits[i];
+            portrait.texture = texture;
+            portrait.enabled = texture != null;
+            if (texture != null)
+            {
+                // Fit the full illustration without stretching or cutting off the character.
+                float fit = Mathf.Min(220f / texture.width, 66f / texture.height);
+                portrait.rectTransform.sizeDelta = new Vector2(texture.width * fit, texture.height * fit);
+            }
+        }
+        historyEmpty.gameObject.SetActive(manager.HistoryCount == 0);
+        historyPageLabel.text = (historyPage + 1) + " / " + manager.HistoryPageCount;
+        historyPrevious.SetInteractable(historyPage > 0);
+        historyNext.SetInteractable(historyPage + 1 < manager.HistoryPageCount);
     }
 
     private void BuildSettingsScreen(RectTransform viewport)
@@ -330,7 +437,7 @@ public sealed class RoulletteUI : MonoBehaviour
         Text label = Label("Label", rect, Vector2.zero, size - new Vector2(8, 8),
             caption, fontSize, UnselectedColor);
         label.fontStyle = FontStyle.Bold;
-        return new SelectionVisual { Label = label, Edges = Frame(rect, size) };
+        return new SelectionVisual { Label = label, Edges = Frame(rect, size), Button = button };
     }
 
     private static Image[] Frame(Transform parent, Vector2 size)

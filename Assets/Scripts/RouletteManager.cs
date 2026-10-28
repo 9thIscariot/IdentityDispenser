@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,6 +35,21 @@ public sealed class RouletteManager : MonoBehaviour
 
     private List<IdentityData> remaining;
     private int totalCount;
+    // Completed draws remain available until this roulette session ends.
+    private readonly List<IdentityData> drawHistory = new List<IdentityData>();
+    public const int HistoryPageSize = 4;
+    public int HistoryCount => drawHistory.Count;
+    public int HistoryPageCount => Math.Max(1, (HistoryCount + HistoryPageSize - 1) / HistoryPageSize);
+
+    public IdentityData GetHistoryEntry(int page, int row, out int number)
+    {
+        number = 0;
+        if (page < 0 || page >= HistoryPageCount || row < 0 || row >= HistoryPageSize) return null;
+        int index = HistoryCount - 1 - page * HistoryPageSize - row;
+        if (index < 0) return null;
+        number = index + 1;
+        return drawHistory[index];
+    }
     private readonly Dictionary<string, Texture2D> portraitLookup = new Dictionary<string, Texture2D>();
     private readonly HashSet<string> drawnIdentityIds = new HashSet<string>();
     private readonly HashSet<string> drawnSinners = new HashSet<string>();
@@ -100,6 +115,7 @@ public sealed class RouletteManager : MonoBehaviour
         drawnSinners.Add(result.SinnerName);
         RebuildPool();
         LastResult = result;
+        drawHistory.Add(result);
         IsSpinning = false;
         IsStopping = false;
         view.ShowResult(result);

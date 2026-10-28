@@ -128,6 +128,8 @@ public static class ManualSpinChecks
         manager.Spin();
         Tick(reel, 900, 1f / 60);
         Check(manager.IsSpinning && results == 0 && view.Frames > 900, "Wait indefinitely for Stop");
+        Check(manager.HistoryCount == 0 && manager.HistoryPageCount == 1 &&
+            manager.GetHistoryEntry(0, 0, out _) == null, "Spinning is not a completed history entry");
         manager.StopSpin();
         manager.StopSpin();
         Tick(reel, 60, 1f / 60);
@@ -135,6 +137,8 @@ public static class ManualSpinChecks
         Tick(reel, 600, 1f / 60);
         Check(!manager.IsSpinning && !manager.IsStopping && results == 1 &&
             manager.RemainingCount == total - 1 && view.Shown == manager.LastResult, "One completed draw");
+        Check(manager.HistoryCount == 1 && manager.GetHistoryEntry(0, 0, out int firstNumber) == manager.LastResult &&
+            firstNumber.ToString("D3") == "001", "First result is recorded once as 001");
         manager.SetIdentityDuplicates(true);
         Check(manager.RemainingCount == total, "Identity duplicate ON restores drawn identity to pool");
         manager.SetSinnerDuplicates(false);
@@ -160,8 +164,34 @@ public static class ManualSpinChecks
         Tick(reel, 600, 1f / 60);
         Check(results == 1 && !manager.IsStopping && manager.RemainingCount == total,
             "Exit during braking cancels pending result");
+        Check(manager.HistoryCount == 1, "Reset and cancelled spins preserve completed history without adding entries");
+        var expectedHistory = new List<IdentityData> { manager.GetHistoryEntry(0, 0, out _) };
+        manager.SetIdentityDuplicates(true);
+        for (int i = 1; i < 15; i++)
+        {
+            manager.Spin();
+            manager.StopSpin();
+            Tick(reel, 1200, 1f / 60);
+            expectedHistory.Add(manager.LastResult);
+        }
+        Check(manager.HistoryCount == 15 && manager.HistoryPageCount == 4, "15 results occupy four pages");
+        for (int page = 0; page < 4; page++)
+        for (int row = 0; row < 4; row++)
+        {
+            int expectedNumber = 15 - page * 4 - row;
+            IdentityData entry = manager.GetHistoryEntry(page, row, out int number);
+            if (expectedNumber > 0)
+                Check(number == expectedNumber && entry == expectedHistory[expectedNumber - 1],
+                    "Every page retains original sequence numbers in newest-first order");
+            else Check(entry == null && number == 0, "Partial last page has no stale fourth entry");
+        }
+        manager.GetHistoryEntry(0, 0, out int latestNumber);
+        Check(latestNumber.ToString("D3") == "015", "Latest result uses 015 numbering");
+        Check(manager.GetHistoryEntry(-1, 0, out _) == null && manager.GetHistoryEntry(4, 0, out _) == null &&
+            manager.GetHistoryEntry(0, 4, out _) == null, "Invalid pages and rows are rejected");
+        manager.ResetDraws();
         manager.QuitRoulette();
         Check(UnityEngine.SceneManagement.SceneManager.Loaded == "Title", "Second Exit returns to title");
-        return "PASS: " + paths + " brake paths; sinner selection, duplicate settings, indefinite spinning, gradual stop, reset, title return.";
+        return "PASS: " + paths + " brake paths; sinner selection, duplicates, stop/cancel, reset, title return; completed history, numbering, newest-first pagination and page boundaries.";
     }
 }
