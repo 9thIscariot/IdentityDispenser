@@ -112,6 +112,7 @@ public sealed class IdentityDatabase
         new IdentityData("hong-lu-014", "홍루", "거미집 약지 아비"),
         new IdentityData("hong-lu-015", "홍루", "S사 추노꾼"),
         new IdentityData("hong-lu-016", "홍루", "동부 섕크 협회 3과"),
+        new IdentityData("hong-lu-017", "홍루", "오트쿠튀르::르누아르 3F 방송실"),
 
         // 히스클리프
         new IdentityData("heathcliff-001", "히스클리프", "LCB 수감자"),
@@ -130,6 +131,7 @@ public sealed class IdentityDatabase
         new IdentityData("heathcliff-014", "히스클리프", "흑수 - 유 필두"),
         new IdentityData("heathcliff-015", "히스클리프", "중지 작은 형님"),
         new IdentityData("heathcliff-016", "히스클리프", "거미집 엄지 제자"),
+        new IdentityData("heathcliff-017", "히스클리프", "오트쿠튀르::르루주 바느질의 왕"),
 
         // 이스마엘
         new IdentityData("ishmael-001", "이스마엘", "LCB 수감자"),

@@ -239,6 +239,8 @@ MonoBehaviour:
     texture: {fileID: 2800000, guid: ba686b6c9544cd24fae09af0614359a8, type: 3}
   - identityId: hong-lu-016
     texture: {fileID: 2800000, guid: 0857409d717ba0b439728098dc1dbbfa, type: 3}
+  - identityId: hong-lu-017
+    texture: {fileID: 2800000, guid: 0857409d717ba0b439728098dc1dbbfa, type: 3}
   - identityId: heathcliff-001
     texture: {fileID: 2800000, guid: 46a7059fddb862d4e9e85a4de9e324b8, type: 3}
   - identityId: heathcliff-002
@@ -270,6 +272,8 @@ MonoBehaviour:
   - identityId: heathcliff-015
     texture: {fileID: 2800000, guid: 82a986a1ca507bf49a4eb34599ea85b8, type: 3}
   - identityId: heathcliff-016
+    texture: {fileID: 2800000, guid: 621b5d056a796d0459d7063a71adc908, type: 3}
+  - identityId: heathcliff-017
     texture: {fileID: 2800000, guid: 621b5d056a796d0459d7063a71adc908, type: 3}
   - identityId: ishmael-001
     texture: {fileID: 2800000, guid: aa7c27ca49a0d9a439bfbe08d13c5dd8, type: 3}
